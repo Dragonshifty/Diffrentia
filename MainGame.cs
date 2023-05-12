@@ -23,7 +23,7 @@ public class MainGame : MonoBehaviour
         moveCards.DistributeCards(playerHand, true);
         ShowTop();
         SetCompyHand();
-        moveCards.DistributeCards(compyHand,false);
+        moveCards.DistributeCards(compyHand, false);
         ShowTop();
         // SortHand(playerHand);
         // moveCards.DistributeCards(playerHand);
