@@ -45,7 +45,7 @@ public class CreateCards : MonoBehaviour
     {
         Vector2 waypointStart = startingPosition.position;
         foreach (string house in houses){
-            for (int i = 1; i < 14; i++)
+            for (int i = 2; i < 15; i++)
             {
                 GameObject card = Instantiate(prefab, waypointStart, Quaternion.identity);
                 ObjectDetails cardDetails = card.GetComponent<ObjectDetails>();
@@ -63,6 +63,9 @@ public class CreateCards : MonoBehaviour
                         break;
                     case 13:
                         cardDetails.cardValueText.text = "K";
+                        break;
+                    case 14:
+                        cardDetails.cardValueText.text = "A";
                         break;
                     default:
                         cardDetails.cardValueText.text = i.ToString();

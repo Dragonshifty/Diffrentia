@@ -19,11 +19,10 @@ public class MoveCards : MonoBehaviour
 
     public void DistributeCards(List<GameObject> cards, bool isPlayer)
     {
-        bool isSorted = false;
-        StartCoroutine(DealCards(cards, isPlayer, isSorted));
+        StartCoroutine(DealCards(cards, isPlayer));
     }
 
-    IEnumerator DealCards(List<GameObject> cards, bool isPlayer, bool isSorted) {
+    IEnumerator DealCards(List<GameObject> cards, bool isPlayer) {
         int index = 0;
         foreach (GameObject card in cards)
         {
@@ -44,13 +43,24 @@ public class MoveCards : MonoBehaviour
             index++;
         }
         index = 0;
-        // yield return StartCoroutine(ShowTop(topCard));
-        if (!isSorted) 
+        yield return MainGame.Instance.EnablePlayerHand(true);
+    }
+
+    public void MoveCardToPile(GameObject card)
+    {
+        StartCoroutine(MoveToPileAnim(card));
+    }
+
+    IEnumerator MoveToPileAnim(GameObject card)
+    {
+        Vector3 targetPosition = deckAndPileWaypoints[1].position;
+        while (Vector2.Distance(card.transform.position, targetPosition) > 0.01f)
         {
-            yield return StartCoroutine(SortHand(cards, isPlayer));
-            isSorted = true;
-            yield return StartCoroutine(DealCards(cards, isPlayer, isSorted));
+            float delta = moveSpeed * Time.deltaTime;
+            card.transform.position = Vector2.MoveTowards(card.transform.position, targetPosition, delta);
+            yield return null;
         }
+        card.transform.position = targetPosition;
     }
 
     
