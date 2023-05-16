@@ -36,7 +36,7 @@ public class ObjectDetails : MonoBehaviour
     void OnMouseDown() 
     {
         MainGame.Instance.GetCardToPlay(gameObject);
-        SendToLog();
+        // SendToLog();
     }
 
     void SendToLog()

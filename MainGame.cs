@@ -14,7 +14,7 @@ public class MainGame : MonoBehaviour
     GameObject topCard;
     GameObject cardInPlay;
     GameObject cardToPlay;
-
+    Compy compy;
     ScoreMaster scoreMaster;
     
     void Awake() {
@@ -27,9 +27,10 @@ public class MainGame : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
         createCards = FindObjectOfType<CreateCards>();
         moveCards = FindObjectOfType<MoveCards>();
+        compy = FindObjectOfType<Compy>();
+        scoreMaster = FindObjectOfType<ScoreMaster>();
     }
     
     void Start()
@@ -41,7 +42,6 @@ public class MainGame : MonoBehaviour
         SetCompyHand();
         moveCards.DistributeCards(compyHand, false);
         ShowTop();
-        
     }
 
     void GetNewDeck()
@@ -57,11 +57,6 @@ public class MainGame : MonoBehaviour
             playerHand.Add(deck[lastCard]);
             deck.RemoveAt(lastCard);
         }
-        // foreach (GameObject playerCard in playerHand)
-        // {
-        //     ObjectDetails cardInteraction = playerCard.AddComponent<ObjectDetails>();
-        //     cardInteraction.Initialize(this);
-        // }
         SortHand(playerHand);
     }
 
@@ -116,7 +111,7 @@ public class MainGame : MonoBehaviour
             {
                 pile.Add(cardToPlay);
                 int playerHandIndex = playerHand.IndexOf(cardToPlay);
-                moveCards.MoveCardToPile(playerHand[playerHandIndex]);
+                moveCards.MoveCardToPile(playerHand[playerHandIndex], isPlayer);
                 playerHand.RemoveAt(playerHandIndex);
                 cardInPlay = cardToPlay;
                 GetNewCard(isPlayer);
@@ -124,9 +119,9 @@ public class MainGame : MonoBehaviour
             {
                 pile.Add(cardToPlay);
                 int compyHandIndex = compyHand.IndexOf(cardToPlay);
-                moveCards.MoveCardToPile(compyHand[compyHandIndex]);
+                moveCards.MoveCardToPile(compyHand[compyHandIndex], isPlayer);
                 cardInPlay = cardToPlay;
-                // GetNewCard(isPlayer);
+                GetNewCard(isPlayer);
             }
         } else
         {
@@ -134,7 +129,8 @@ public class MainGame : MonoBehaviour
             {
                 pile.Add(cardToPlay);
                 int playerHandIndex = playerHand.IndexOf(cardToPlay);
-                moveCards.MoveCardToPile(playerHand[playerHandIndex]);
+                RunPoints(isPlayer);
+                moveCards.MoveCardToPile(playerHand[playerHandIndex], isPlayer);
                 playerHand.RemoveAt(playerHandIndex);
                 cardInPlay = cardToPlay;
                 GetNewCard(isPlayer);
@@ -142,9 +138,11 @@ public class MainGame : MonoBehaviour
             {
                 pile.Add(cardToPlay);
                 int compyHandIndex = compyHand.IndexOf(cardToPlay);
-                moveCards.MoveCardToPile(compyHand[compyHandIndex]);
+                RunPoints(isPlayer);
+                moveCards.MoveCardToPile(compyHand[compyHandIndex], isPlayer);
+                compyHand.RemoveAt(compyHandIndex);
                 cardInPlay = cardToPlay;
-                // GetNewCard(isPlayer);
+                GetNewCard(isPlayer);
             }
         }
     }
@@ -159,6 +157,8 @@ public class MainGame : MonoBehaviour
                 SortHand(playerHand);
                 moveCards.DistributeCards(playerHand, true);
                 ShowTop();
+                EnablePlayerHand(false);
+                RunCompyTurn();
             } else
             {
                 compyHand.Add(deck[GetDeckLastCardIndex()]);
@@ -170,6 +170,11 @@ public class MainGame : MonoBehaviour
         }
     }
 
+    void RunCompyTurn()
+    {
+        GetCardToPlay(compy.CompyChoice(compyHand, cardInPlay));
+    }
+
     public IEnumerator EnablePlayerHand(bool isEnabled)
     {
         foreach (GameObject card in playerHand)
@@ -179,9 +184,11 @@ public class MainGame : MonoBehaviour
         yield return null;
     }
 
+
     public void RunPoints(bool isPlayer)
     {
-        if (deck.Count > 0){
+        if (deck.Count > 0)
+        {
             int cardInPlayValue = cardInPlay.GetComponent<ObjectDetails>().CardValue;
             int cardToPlayValue = cardToPlay.GetComponent<ObjectDetails>().CardValue;
 
@@ -255,6 +262,8 @@ public class MainGame : MonoBehaviour
                             }
                             break;
                     }
+            Debug.Log($"Player: {scoreMaster.PlayerScore} Last: {scoreMaster.LastPlayerScore}");
+            Debug.Log($"Compy: {scoreMaster.CompyScore} Last: {scoreMaster.LastCompyScore}");
         }
     }
 }

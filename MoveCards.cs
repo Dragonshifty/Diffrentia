@@ -23,11 +23,13 @@ public class MoveCards : MonoBehaviour
     }
 
     IEnumerator DealCards(List<GameObject> cards, bool isPlayer) {
+        
+        if (!isPlayer) yield return new WaitForSeconds(2);
+        
         int index = 0;
         foreach (GameObject card in cards)
         {
             card.SetActive(true);
-            // Vector3 startingPosition = card.transform.position;
             Vector3 targetPosition = isPlayer ? 
                 playerWaypoints[index].position : compyWaypoints[index].position;
 
@@ -43,16 +45,22 @@ public class MoveCards : MonoBehaviour
             index++;
         }
         index = 0;
-        yield return MainGame.Instance.EnablePlayerHand(true);
+        if (isPlayer)
+        {
+            yield return MainGame.Instance.EnablePlayerHand(false);
+        } else {
+            yield return MainGame.Instance.EnablePlayerHand(true);
+        }
     }
 
-    public void MoveCardToPile(GameObject card)
+    public void MoveCardToPile(GameObject card, bool isPlayer)
     {
-        StartCoroutine(MoveToPileAnim(card));
+        StartCoroutine(MoveToPileAnim(card, isPlayer));
     }
 
-    IEnumerator MoveToPileAnim(GameObject card)
+    IEnumerator MoveToPileAnim(GameObject card, bool isPlayer)
     {
+        if (!isPlayer) yield return new WaitForSeconds((float)1.6);
         Vector3 targetPosition = deckAndPileWaypoints[1].position;
         while (Vector2.Distance(card.transform.position, targetPosition) > 0.01f)
         {
