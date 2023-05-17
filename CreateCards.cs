@@ -47,7 +47,7 @@ public class CreateCards : MonoBehaviour
         foreach (string house in houses){
             for (int i = 2; i < 15; i++)
             {
-                GameObject card = Instantiate(prefab, waypointStart, Quaternion.identity);
+                GameObject card = Instantiate(prefab, waypointStart, Quaternion.Euler(0, 180f, 0));
                 ObjectDetails cardDetails = card.GetComponent<ObjectDetails>();
                 cardDetails.CardValue = i;
                 cardDetails.House = house;
@@ -71,7 +71,7 @@ public class CreateCards : MonoBehaviour
                         cardDetails.cardValueText.text = i.ToString();
                         break;
                 }                
-                card.SetActive(false);
+                // card.SetActive(false);
                 deck.Add(card);
             }
         }

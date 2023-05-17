@@ -8,18 +8,31 @@ public class ObjectDetails : MonoBehaviour
     private MainGame mainGame;
     int cardValue;
     string house;
+    public RectTransform cardFront;
+    public RectTransform cardBack;
 
     public TextMeshProUGUI cardValueText;
     public TextMeshProUGUI houseText;
     Collider2D cardCollider;
+    Canvas canvas;
+    public bool showFront;
 
-    // public void Initialize(MainGame game)
-    // {
-    //     mainGame = game;
-    // }
     void Awake() {
         cardCollider = GetComponent<Collider2D>();  
         cardCollider.enabled = false;  
+        canvas = GetComponentInChildren<Canvas>();
+        if (canvas != null)
+        {
+            canvas.sortingOrder = 0;
+        }
+        canvas.overrideSorting = true;
+        cardBack.gameObject.SetActive(true);
+        cardFront.gameObject.SetActive(false);
+        showFront = false;
+    }
+
+    void Start() {
+        
     }
     public int CardValue
     { 
@@ -36,17 +49,22 @@ public class ObjectDetails : MonoBehaviour
     void OnMouseDown() 
     {
         MainGame.Instance.GetCardToPlay(gameObject);
-        // SendToLog();
     }
 
-    void SendToLog()
-    {
-        Debug.Log(cardValue);
-    }
 
     public void SetCollider(bool isEnabled)
     {
         cardCollider.enabled = isEnabled;
+    }
+
+    public void RaiseSortingOrder(int sortOrder)
+    {
+        canvas.sortingOrder = sortOrder;
+    }
+
+    public void SetFrontBool()
+    {
+        showFront = true;
     }
     
 }
