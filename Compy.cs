@@ -48,6 +48,8 @@ public class Compy : MonoBehaviour
         return compyHand[returnIndex];
     }
 
+    
+
     public int GetTest()
     {
         return 1;

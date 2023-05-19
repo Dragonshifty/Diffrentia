@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MainGame : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI cardsRemainingText;
     public static MainGame Instance { get; private set; }
     List<GameObject> deck = new List<GameObject>();
     List<GameObject> playerHand = new List<GameObject>();
@@ -47,6 +49,10 @@ public class MainGame : MonoBehaviour
         // ShowTop();
     }
 
+    private void Update() 
+    {
+        cardsRemainingText.text = deck.Count.ToString();
+    }
     void NewGame()
     {
         gameOver = false;
@@ -205,6 +211,7 @@ public class MainGame : MonoBehaviour
                 moveCards.DistributeCards(playerHand, true);
                 ShowTop();
                 EnablePlayerHand(false);
+                
                 RunCompyTurn();
             } else
             {
@@ -213,6 +220,7 @@ public class MainGame : MonoBehaviour
                 SortHand(compyHand);
                 moveCards.DistributeCards(compyHand, false);
                 ShowTop();
+                // UpdateRemainingCardsDelay();
             }
         }
     }
@@ -252,10 +260,11 @@ public class MainGame : MonoBehaviour
                         case 0:
                             if (!isPlayer)
                                 {
-                                    scoreMaster.LastCompyScore = 0;
+                                    StartCoroutine(UpdateCompyScoreDelay(0, false));
+                                    // scoreMaster.LastCompyScore = 0;
                                 } else
                                 {
-                                    scoreMaster.LastCompyScore = 0;
+                                    scoreMaster.LastPlayerScore = 0;
                                 }
                             break;
                         case 1:
@@ -265,8 +274,9 @@ public class MainGame : MonoBehaviour
                                 difference *= 2;
                                 if (!isPlayer)
                                 {
-                                    scoreMaster.CompyScore = difference;
-                                    scoreMaster.LastCompyScore = difference;
+                                    StartCoroutine(UpdateCompyScoreDelay(difference, true));
+                                    // scoreMaster.CompyScore = difference;
+                                    // scoreMaster.LastCompyScore = difference;
                                 } else
                                 {
                                     scoreMaster.PlayerScore = difference;
@@ -279,8 +289,9 @@ public class MainGame : MonoBehaviour
                                 int difference = cardToPlayValue - cardInPlayValue;
                                 if (!isPlayer)
                                 {
-                                    scoreMaster.CompyScore = difference;
-                                    scoreMaster.LastCompyScore = difference;
+                                    StartCoroutine(UpdateCompyScoreDelay(difference, true));
+                                    // scoreMaster.CompyScore = difference;
+                                    // scoreMaster.LastCompyScore = difference;
                                 } else
                                 {
                                     scoreMaster.PlayerScore = difference;
@@ -294,7 +305,8 @@ public class MainGame : MonoBehaviour
                             {
                                 if (!isPlayer)
                                 {
-                                    scoreMaster.LastCompyScore = 0;
+                                    StartCoroutine(UpdateCompyScoreDelay(0, false));
+                                    // scoreMaster.LastCompyScore = 0;
                                 } else
                                 {
                                     scoreMaster.LastPlayerScore = 0;
@@ -305,8 +317,9 @@ public class MainGame : MonoBehaviour
                                 int difference = cardInPlayValue - cardToPlayValue;
                                 if (!isPlayer)
                                 {
-                                    scoreMaster.CompyScore = -difference;
-                                    scoreMaster.LastCompyScore = difference;
+                                    StartCoroutine(UpdateCompyScoreDelay(-difference, true));
+                                    // scoreMaster.CompyScore = -difference;
+                                    // scoreMaster.LastCompyScore = -difference;
                                 } else
                                 {
                                     scoreMaster.PlayerScore = -difference;
@@ -315,9 +328,29 @@ public class MainGame : MonoBehaviour
                             }
                             break;
                     }
-            Debug.Log($"Player: {scoreMaster.PlayerScore} Last: {scoreMaster.LastPlayerScore}");
-            Debug.Log($"Compy: {scoreMaster.CompyScore} Last: {scoreMaster.LastCompyScore}");
+            // Debug.Log($"Player: {scoreMaster.PlayerScore} Last: {scoreMaster.LastPlayerScore}");
+            // Debug.Log($"Compy: {scoreMaster.CompyScore} Last: {scoreMaster.LastCompyScore}");
             Debug.Log($"Fox: {scoreMaster.HouseFoxScore} Cat: {scoreMaster.HouseCatScore} Dragon: {scoreMaster.HouseDragonScore} Owl: {scoreMaster.HouseOwlScore}");
         }
+    }
+
+    IEnumerator UpdateCompyScoreDelay(int score, bool both)
+    {
+        yield return new WaitForSeconds((float)1.6);
+        
+        if (both)
+        {
+        scoreMaster.CompyScore = score;
+        scoreMaster.LastCompyScore = score;
+        } else
+        {
+            scoreMaster.LastCompyScore = score;
+        }
+    }
+
+    IEnumerator UpdateRemainingCardsDelay()
+    {
+        yield return new WaitForSeconds((float)1.6);
+        cardsRemainingText.text = deck.Count.ToString();
     }
 }

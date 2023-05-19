@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScoreMaster : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI playerTotalText;
+    [SerializeField] TextMeshProUGUI compyTotalText;
+    [SerializeField] TextMeshProUGUI playerLastScoreText;
+    [SerializeField] TextMeshProUGUI compyLastScoreText;
+    
     int playerScore;
     int compyScore;
     int lastPlayerScore;
@@ -12,6 +18,14 @@ public class ScoreMaster : MonoBehaviour
     int houseCatScore;
     int houseDragonScore;
     int houseOwlScore;
+
+    private void Update() 
+    {
+        playerTotalText.text = playerScore.ToString();
+        compyTotalText.text = compyScore.ToString();
+        playerLastScoreText.text = lastPlayerScore.ToString();
+        compyLastScoreText.text = lastCompyScore.ToString();
+    }
 
     public int PlayerScore
     {
