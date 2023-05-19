@@ -42,7 +42,7 @@ public class MoveCards : MonoBehaviour
             
             if (isPlayer)
             {
-                initialRotation = card.transform.rotation;
+                initialRotation = Quaternion.Euler(0f, 180f, 0f);
                 desiredRotation = initialRotation * Quaternion.AngleAxis(rotationAngle, Vector3.up);
             }
 
@@ -60,28 +60,18 @@ public class MoveCards : MonoBehaviour
                 card.transform.position = Vector2.MoveTowards(card.transform.position, targetPosition, delta);
 
                 // Rotate
-
                 if (isPlayer && card.GetComponent<ObjectDetails>().showFront != true)
                 {
                     float currentDistance = Vector2.Distance(card.transform.position, targetPosition);
                     float currentRotation = Mathf.Lerp(0f, rotationAngle, 1f - currentDistance / distance);
                     card.transform.rotation = initialRotation * Quaternion.AngleAxis(currentRotation, Vector3.up);
 
-                    float dotProduct = Vector3.Dot(Camera.main.transform.forward, transform.forward);
+                    float dotProduct = Vector3.Dot(Camera.main.transform.forward, card.transform.forward);
+                    bool isBackFaceVisible = (dotProduct < 0);
 
+                    card.GetComponent<ObjectDetails>().cardFront.gameObject.SetActive(!isBackFaceVisible);
+                    card.GetComponent<ObjectDetails>().cardBack.gameObject.SetActive(isBackFaceVisible);
 
-                    if (dotProduct < 0)
-                    {
-                    card.GetComponent<ObjectDetails>().cardFront.gameObject.SetActive(false);
-                    card.GetComponent<ObjectDetails>().cardBack.gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                    card.GetComponent<ObjectDetails>().cardFront.gameObject.SetActive(true);
-                    card.GetComponent<ObjectDetails>().cardBack.gameObject.SetActive(false);
-                    }
-
-                    // card.transform.rotation = desiredRotation;
                 }
 
                 yield return null;
@@ -112,8 +102,8 @@ public class MoveCards : MonoBehaviour
     {
         if (!isPlayer) 
         {
-            yield return new WaitForSeconds((float)1.6);
-            initialRotation = card.transform.rotation;
+            yield return new WaitForSeconds(1.6f);
+            initialRotation = Quaternion.Euler(0f, 180f, 0f);
             desiredRotation = initialRotation * Quaternion.AngleAxis(rotationAngle, Vector3.up);
         }
         
@@ -130,21 +120,14 @@ public class MoveCards : MonoBehaviour
             if (!isPlayer)
             {
                 float currentDistance = Vector2.Distance(card.transform.position, targetPosition);
-                    float currentRotation = Mathf.Lerp(0f, rotationAngle, 1f - currentDistance / distance);
-                    card.transform.rotation = initialRotation * Quaternion.AngleAxis(currentRotation, Vector3.up);
+                float currentRotation = Mathf.Lerp(0f, rotationAngle, 1f - currentDistance / distance);
+                card.transform.rotation = initialRotation * Quaternion.AngleAxis(currentRotation, Vector3.up);
 
-                    float dotProduct = Vector3.Dot(Camera.main.transform.forward, transform.forward);
+                float dotProduct = Vector3.Dot(Camera.main.transform.forward, card.transform.forward);
+                bool isBackFaceVisible = (dotProduct < 0);
 
-                    if (dotProduct < 0)
-                    {
-                    card.GetComponent<ObjectDetails>().cardFront.gameObject.SetActive(false);
-                    card.GetComponent<ObjectDetails>().cardBack.gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                    card.GetComponent<ObjectDetails>().cardFront.gameObject.SetActive(true);
-                    card.GetComponent<ObjectDetails>().cardBack.gameObject.SetActive(false);
-                    }
+                card.GetComponent<ObjectDetails>().cardFront.gameObject.SetActive(!isBackFaceVisible);
+                card.GetComponent<ObjectDetails>().cardBack.gameObject.SetActive(isBackFaceVisible);
             }
             yield return null;
         }
