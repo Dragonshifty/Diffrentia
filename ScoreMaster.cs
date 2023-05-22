@@ -9,6 +9,10 @@ public class ScoreMaster : MonoBehaviour
     [SerializeField] TextMeshProUGUI compyTotalText;
     [SerializeField] TextMeshProUGUI playerLastScoreText;
     [SerializeField] TextMeshProUGUI compyLastScoreText;
+    [SerializeField] TextMeshProUGUI foxScoreText;
+    [SerializeField] TextMeshProUGUI owlScoreText;
+    [SerializeField] TextMeshProUGUI dragonScoreText;
+    [SerializeField] TextMeshProUGUI catScoreText;
     
     int playerScore;
     int compyScore;
@@ -19,12 +23,30 @@ public class ScoreMaster : MonoBehaviour
     int houseDragonScore;
     int houseOwlScore;
 
+    private static ScoreMaster instance;
+
+    private void Awake() 
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Update() 
     {
         playerTotalText.text = playerScore.ToString();
         compyTotalText.text = compyScore.ToString();
         playerLastScoreText.text = lastPlayerScore.ToString();
         compyLastScoreText.text = lastCompyScore.ToString();
+        foxScoreText.text = $"F: {houseFoxScore.ToString()}";
+        owlScoreText.text = $"O: {houseOwlScore.ToString()}";
+        dragonScoreText.text = $"{houseDragonScore.ToString()}: D";
+        catScoreText.text = $"{houseCatScore.ToString()}: C";
     }
 
     public int PlayerScore
@@ -89,6 +111,37 @@ public class ScoreMaster : MonoBehaviour
             case "Owl":
                 houseOwlScore += amount;
                 break;
+        }
+    }
+
+    public void UpdatePlayerPrefs()
+    {
+        bool exists = PlayerPrefs.HasKey("FoxScore");
+
+        if (!exists)
+        {
+            PlayerPrefs.SetInt("FoxScore", houseFoxScore);
+            PlayerPrefs.SetInt("CatScore", houseCatScore);
+            PlayerPrefs.SetInt("DragonScore", houseDragonScore);
+            PlayerPrefs.SetInt("OwlScore", houseOwlScore);
+        } else 
+        {
+            int tempFox = PlayerPrefs.GetInt("FoxScore");
+            int tempCat = PlayerPrefs.GetInt("CatScore");
+            int tempDragon = PlayerPrefs.GetInt("DragonScore");
+            int tempOwl = PlayerPrefs.GetInt("OwlScore");
+
+            tempFox += houseFoxScore;
+            tempCat += houseCatScore;
+            tempDragon += houseDragonScore;
+            tempOwl += houseOwlScore;
+
+            PlayerPrefs.SetInt("FoxScore", tempFox);
+            PlayerPrefs.SetInt("CatScore", tempCat);
+            PlayerPrefs.SetInt("DragonScore", tempDragon);
+            PlayerPrefs.SetInt("OwlScore", tempOwl);
+
+            PlayerPrefs.Save();
         }
     }
 

@@ -12,6 +12,8 @@ public class MoveCards : MonoBehaviour
     List<Transform> playerWaypoints;
     List<Transform> compyWaypoints;
     List<Transform> deckAndPileWaypoints;
+    SoundHandler soundHandler;
+    public int newGameIndicator = 0;
     
     [SerializeField] float moveSpeed = 20f;
 
@@ -19,6 +21,8 @@ public class MoveCards : MonoBehaviour
         playerWaypoints = waypointsSO.GetPlayerWaypoints();
         compyWaypoints = waypointsSO.GetCompyWaypoints();
         deckAndPileWaypoints = waypointsSO.GetDeckAndPileWaypoints();
+
+        soundHandler = FindObjectOfType<SoundHandler>();
 
         // initialRotation = transform.rotation;
         // desiredRotation = initialRotation * Quaternion.AngleAxis(rotationAngle, Vector3.up);
@@ -31,7 +35,14 @@ public class MoveCards : MonoBehaviour
 
     IEnumerator DealCards(List<GameObject> cards, bool isPlayer) {
         
-        if (!isPlayer) yield return new WaitForSeconds(2);
+        if (!isPlayer) 
+        {
+            yield return new WaitForSeconds(2);
+        } 
+        // else if (!isPlayer && newGameIndicator == 2)
+        // {
+        //     yield return new WaitForSeconds(.8f);
+        // }
         
         
         int index = 0;
@@ -52,6 +63,8 @@ public class MoveCards : MonoBehaviour
 
             float distance = Vector2.Distance(card.transform.position, targetPosition);
             float rotationIncrement = rotationAngle / distance;
+
+            
 
             while (Vector2.Distance(card.transform.position, targetPosition) > 0.01f)
             {
@@ -78,6 +91,7 @@ public class MoveCards : MonoBehaviour
             }
 
             card.transform.position = targetPosition;
+            // yield return PlaySingleCard();
             
             card.GetComponent<ObjectDetails>().SetFrontBool();
             yield return null;
@@ -85,12 +99,15 @@ public class MoveCards : MonoBehaviour
             
         }
         index = 0;
+        newGameIndicator++;
         if (isPlayer)
         {
             yield return MainGame.Instance.EnablePlayerHand(false);
-        } else {
+        } else if (!isPlayer && newGameIndicator > 2) {
             yield return MainGame.Instance.EnablePlayerHand(true);
         }
+        
+        if (newGameIndicator == 2) yield return MainGame.Instance.CoinToss();
     }
 
     public void MoveCardToPile(GameObject card, bool isPlayer)
@@ -102,7 +119,13 @@ public class MoveCards : MonoBehaviour
     {
         if (!isPlayer) 
         {
-            yield return new WaitForSeconds(1.6f);
+            // if (newGameIndicator == 2)
+            // {
+            //     yield return new WaitForSeconds(.4f);
+            // } else 
+            // {
+                yield return new WaitForSeconds(1.6f);
+            // }         
             initialRotation = Quaternion.Euler(0f, 180f, 0f);
             desiredRotation = initialRotation * Quaternion.AngleAxis(rotationAngle, Vector3.up);
         }
@@ -135,14 +158,9 @@ public class MoveCards : MonoBehaviour
     }
 
     
-    IEnumerator SortHand(List<GameObject> hand, bool isPlayer)
+    IEnumerator PlaySingleCard()
     {
-        hand.Sort((card1, card2) =>
-        {
-            int cardValue1 = card1.GetComponent<ObjectDetails>().CardValue;
-            int cardValue2 = card2.GetComponent<ObjectDetails>().CardValue;
-            return cardValue1.CompareTo(cardValue2);
-        });
+        soundHandler.PlaySingleCardA();
         yield return null;
     }
 

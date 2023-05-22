@@ -18,7 +18,7 @@ public class MainGame : MonoBehaviour
     GameObject cardToPlay;
     Compy compy;
     ScoreMaster scoreMaster;
-    int SortOrderInt = 0;
+    int sortOrderInt = 0;
     bool gameOver = false;
     
     void Awake() {
@@ -40,30 +40,34 @@ public class MainGame : MonoBehaviour
     void Start()
     {
         NewGame();
-        // GetNewDeck();
-        // SetPlayerHand();
-        // moveCards.DistributeCards(playerHand, true);
-        // ShowTop();
-        // SetCompyHand();
-        // moveCards.DistributeCards(compyHand, false);
-        // ShowTop();
+        SoundHandler.Instance.PlayMusic(true);
     }
 
-    private void Update() 
-    {
-        cardsRemainingText.text = deck.Count.ToString();
-    }
-    void NewGame()
+    public void NewGame()
     {
         gameOver = false;
         ClearAll();
         GetNewDeck();
         SetPlayerHand();
         moveCards.DistributeCards(playerHand, true);
-        // ShowTop();
+        // EnablePlayerHand(false);
         SetCompyHand();
         moveCards.DistributeCards(compyHand, false);
-        // ShowTop();
+    }
+
+    public IEnumerator CoinToss()
+    {
+        System.Random rand = new System.Random();
+        int toss = rand.Next(1,3);
+        if (toss == 1)
+        {
+            int pick = rand.Next(0, 5);
+            GetCardToPlay(compyHand[pick]);
+        } else
+        {
+            StartCoroutine(EnablePlayerHand(true));
+        }
+        yield return null;
     }
 
     void ClearAll()
@@ -89,6 +93,8 @@ public class MainGame : MonoBehaviour
         }
         compyHand.Clear();
         scoreMaster.ResetScores();
+        moveCards.newGameIndicator = 0;
+        sortOrderInt = 0;
     }
 
     void GetNewDeck()
@@ -141,20 +147,24 @@ public class MainGame : MonoBehaviour
 
     public void ShowTop()
     {
-        int lastCard = deck.Count -1;
-        deck[lastCard].SetActive(true);
-        SortOrderInt++;
-        deck[lastCard].GetComponent<ObjectDetails>().RaiseSortingOrder(SortOrderInt);
+        if (deck.Count != 0)
+        {
+            int lastCard = deck.Count -1;
+            deck[lastCard].SetActive(true);
+            sortOrderInt++;
+            deck[lastCard].GetComponent<ObjectDetails>().RaiseSortingOrder(sortOrderInt);
+        }
     }
 
     public void GetCardToPlay(GameObject cardPick)
     {
         if (deck.Count == 0) gameOver = true;
+
         if (!gameOver){
             cardToPlay = cardPick;
             bool isPlayer = playerHand.Contains(cardToPlay);
             cardToPlay.GetComponent<ObjectDetails>().SetCollider(false);
-            cardToPlay.GetComponent<ObjectDetails>().RaiseSortingOrder(SortOrderInt);
+            cardToPlay.GetComponent<ObjectDetails>().RaiseSortingOrder(sortOrderInt);
 
             
             if (pile.Count == 0)
@@ -172,6 +182,7 @@ public class MainGame : MonoBehaviour
                     pile.Add(cardToPlay);
                     int compyHandIndex = compyHand.IndexOf(cardToPlay);
                     moveCards.MoveCardToPile(compyHand[compyHandIndex], isPlayer);
+                    compyHand.RemoveAt(compyHandIndex);
                     cardInPlay = cardToPlay;
                     GetNewCard(isPlayer);
                 }
@@ -193,6 +204,7 @@ public class MainGame : MonoBehaviour
                     RunPoints(isPlayer);
                     moveCards.MoveCardToPile(compyHand[compyHandIndex], isPlayer);
                     compyHand.RemoveAt(compyHandIndex);
+                    // StartCoroutine(UpdateRemainingCardsDelay());
                     cardInPlay = cardToPlay;
                     GetNewCard(isPlayer);
                 }
@@ -201,12 +213,13 @@ public class MainGame : MonoBehaviour
     }
 
     void GetNewCard(bool isPlayer){
-        if (GetDeckLastCardIndex() != 0)
+        if (deck.Count != 0)
         {
             if (isPlayer)
             {
                 playerHand.Add(deck[GetDeckLastCardIndex()]);
                 deck.RemoveAt(GetDeckLastCardIndex());
+                cardsRemainingText.text = deck.Count.ToString();
                 SortHand(playerHand);
                 moveCards.DistributeCards(playerHand, true);
                 ShowTop();
@@ -217,10 +230,10 @@ public class MainGame : MonoBehaviour
             {
                 compyHand.Add(deck[GetDeckLastCardIndex()]);
                 deck.RemoveAt(GetDeckLastCardIndex());
+                StartCoroutine(UpdateRemainingCardsDelay());
                 SortHand(compyHand);
                 moveCards.DistributeCards(compyHand, false);
                 ShowTop();
-                // UpdateRemainingCardsDelay();
             }
         }
     }
@@ -261,7 +274,6 @@ public class MainGame : MonoBehaviour
                             if (!isPlayer)
                                 {
                                     StartCoroutine(UpdateCompyScoreDelay(0, false));
-                                    // scoreMaster.LastCompyScore = 0;
                                 } else
                                 {
                                     scoreMaster.LastPlayerScore = 0;
@@ -275,8 +287,6 @@ public class MainGame : MonoBehaviour
                                 if (!isPlayer)
                                 {
                                     StartCoroutine(UpdateCompyScoreDelay(difference, true));
-                                    // scoreMaster.CompyScore = difference;
-                                    // scoreMaster.LastCompyScore = difference;
                                 } else
                                 {
                                     scoreMaster.PlayerScore = difference;
@@ -290,8 +300,6 @@ public class MainGame : MonoBehaviour
                                 if (!isPlayer)
                                 {
                                     StartCoroutine(UpdateCompyScoreDelay(difference, true));
-                                    // scoreMaster.CompyScore = difference;
-                                    // scoreMaster.LastCompyScore = difference;
                                 } else
                                 {
                                     scoreMaster.PlayerScore = difference;
@@ -306,7 +314,6 @@ public class MainGame : MonoBehaviour
                                 if (!isPlayer)
                                 {
                                     StartCoroutine(UpdateCompyScoreDelay(0, false));
-                                    // scoreMaster.LastCompyScore = 0;
                                 } else
                                 {
                                     scoreMaster.LastPlayerScore = 0;
@@ -318,8 +325,6 @@ public class MainGame : MonoBehaviour
                                 if (!isPlayer)
                                 {
                                     StartCoroutine(UpdateCompyScoreDelay(-difference, true));
-                                    // scoreMaster.CompyScore = -difference;
-                                    // scoreMaster.LastCompyScore = -difference;
                                 } else
                                 {
                                     scoreMaster.PlayerScore = -difference;
@@ -328,9 +333,6 @@ public class MainGame : MonoBehaviour
                             }
                             break;
                     }
-            // Debug.Log($"Player: {scoreMaster.PlayerScore} Last: {scoreMaster.LastPlayerScore}");
-            // Debug.Log($"Compy: {scoreMaster.CompyScore} Last: {scoreMaster.LastCompyScore}");
-            Debug.Log($"Fox: {scoreMaster.HouseFoxScore} Cat: {scoreMaster.HouseCatScore} Dragon: {scoreMaster.HouseDragonScore} Owl: {scoreMaster.HouseOwlScore}");
         }
     }
 
