@@ -10,4 +10,14 @@ public class SceneStuffs : MonoBehaviour
         // SceneManager.LoadScene(0);
         MainGame.Instance.NewGame();
     }
+
+    public void LoadMainGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void LoadWinConditions()
+    {
+        SceneManager.LoadScene(1);
+    }
 }

@@ -18,6 +18,8 @@ public class MainGame : MonoBehaviour
     GameObject cardToPlay;
     Compy compy;
     ScoreMaster scoreMaster;
+    WinLoseConditions winLoseConditions;
+    SceneStuffs sceneStuffs;
     int sortOrderInt = 0;
     bool gameOver = false;
     
@@ -35,12 +37,18 @@ public class MainGame : MonoBehaviour
         moveCards = FindObjectOfType<MoveCards>();
         compy = FindObjectOfType<Compy>();
         scoreMaster = FindObjectOfType<ScoreMaster>();
+        winLoseConditions = FindObjectOfType<WinLoseConditions>();
+        sceneStuffs = FindObjectOfType<SceneStuffs>();
     }
     
     void Start()
     {
         NewGame();
         SoundHandler.Instance.PlayMusic(true);
+    }
+
+    private void Update() {
+        if (gameOver) EndGame();
     }
 
     public void NewGame()
@@ -158,7 +166,11 @@ public class MainGame : MonoBehaviour
 
     public void GetCardToPlay(GameObject cardPick)
     {
-        if (deck.Count == 0) gameOver = true;
+        if (deck.Count == 0)
+        {
+            gameOver = true;
+            // StartCoroutine(EndGame());
+        }
 
         if (!gameOver){
             cardToPlay = cardPick;
@@ -240,7 +252,11 @@ public class MainGame : MonoBehaviour
 
     void RunCompyTurn()
     {
-        if (deck.Count == 0) gameOver = true;
+        if (deck.Count == 0)
+        {
+            gameOver = true;
+            // StartCoroutine(EndGame());
+        }
         GetCardToPlay(compy.CompyChoice(compyHand, cardInPlay));
     }
 
@@ -355,4 +371,16 @@ public class MainGame : MonoBehaviour
         yield return new WaitForSeconds((float)1.6);
         cardsRemainingText.text = deck.Count.ToString();
     }
+
+    // IEnumerator EndGame()
+    // {
+    //     yield return new WaitForSeconds(2);
+        
+    //     sceneStuffs.LoadWinConditions();
+    // }
+    void EndGame()
+    {
+        sceneStuffs.LoadWinConditions();
+    }
+
 }

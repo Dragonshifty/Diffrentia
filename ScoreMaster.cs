@@ -25,12 +25,18 @@ public class ScoreMaster : MonoBehaviour
 
     private static ScoreMaster instance;
 
+    public static ScoreMaster Instance
+    {
+        get { return instance;}
+    }
+
     private void Awake() 
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            // instance = FindObjectOfType<ScoreMaster>();
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -47,7 +53,14 @@ public class ScoreMaster : MonoBehaviour
         owlScoreText.text = $"O: {houseOwlScore.ToString()}";
         dragonScoreText.text = $"{houseDragonScore.ToString()}: D";
         catScoreText.text = $"{houseCatScore.ToString()}: C";
+        
     }
+
+    private void Start() 
+    {
+        UpdatePlayerPrefs(); 
+    }
+
 
     public int PlayerScore
     {
@@ -140,6 +153,11 @@ public class ScoreMaster : MonoBehaviour
             PlayerPrefs.SetInt("CatScore", tempCat);
             PlayerPrefs.SetInt("DragonScore", tempDragon);
             PlayerPrefs.SetInt("OwlScore", tempOwl);
+
+            houseFoxScore = tempFox;
+            houseCatScore = tempCat;
+            houseDragonScore = tempDragon;
+            houseOwlScore = tempOwl;
 
             PlayerPrefs.Save();
         }
