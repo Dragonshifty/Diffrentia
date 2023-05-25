@@ -44,16 +44,20 @@ public class SoundHandler : MonoBehaviour
 
     public void PlayMusic(bool isEnabled)
     {
-        shuffledTracks = musicTracks;
-        Shuffle(shuffledTracks);
+        if (!musicPlayer.isPlaying)
+        {
+            shuffledTracks = musicTracks;
+            Shuffle(shuffledTracks);
 
-        musicPlayer.clip = shuffledTracks[index];
-        musicPlayer.loop = false;
-        musicPlayer.Play();
+            musicPlayer.clip = shuffledTracks[index];
+            musicPlayer.loop = false;
+            musicPlayer.Play();
 
-        index = index++ % musicTracks.Count;
+            index = index++ % musicTracks.Count;
 
-        if (index == 0) Shuffle(shuffledTracks);
+            if (index == 0) Shuffle(shuffledTracks);
+        }
+        
     }
 
     public void PlaySingleCardA()

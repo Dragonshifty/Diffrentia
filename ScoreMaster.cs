@@ -21,7 +21,7 @@ public class ScoreMaster : MonoBehaviour
     int houseFoxScore;
     int houseCatScore;
     int houseDragonScore;
-    int houseOwlScore;
+    int houseFalconScore;
 
     private static ScoreMaster instance;
 
@@ -32,15 +32,15 @@ public class ScoreMaster : MonoBehaviour
 
     private void Awake() 
     {
-        if (instance == null)
+        if (instance != null && instance != this)
         {
-            instance = this;
-            // instance = FindObjectOfType<ScoreMaster>();
-            // DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+            return;
         }
         else
         {
-            Destroy(gameObject);
+            instance = this;
+            // DontDestroyOnLoad(gameObject);
         }
     }
     private void Update() 
@@ -50,7 +50,7 @@ public class ScoreMaster : MonoBehaviour
         playerLastScoreText.text = lastPlayerScore.ToString();
         compyLastScoreText.text = lastCompyScore.ToString();
         foxScoreText.text = $"F: {houseFoxScore.ToString()}";
-        owlScoreText.text = $"O: {houseOwlScore.ToString()}";
+        owlScoreText.text = $"O: {houseFalconScore.ToString()}";
         dragonScoreText.text = $"{houseDragonScore.ToString()}: D";
         catScoreText.text = $"{houseCatScore.ToString()}: C";
         
@@ -58,7 +58,7 @@ public class ScoreMaster : MonoBehaviour
 
     private void Start() 
     {
-        UpdatePlayerPrefs(); 
+        // UpdatePlayerPrefs(); 
     }
 
 
@@ -102,10 +102,10 @@ public class ScoreMaster : MonoBehaviour
         get { return houseDragonScore; }
         set { houseDragonScore += value; }
     }
-    public int HouseOwlScore
+    public int HouseFalconScore
     {
-        get { return houseOwlScore; }
-        set { houseOwlScore += value; }
+        get { return houseFalconScore; }
+        set { houseFalconScore += value; }
     }
     
     public void HouseScore(string house, int amount)
@@ -122,7 +122,7 @@ public class ScoreMaster : MonoBehaviour
                 houseDragonScore += amount;
                 break;
             case "Owl":
-                houseOwlScore += amount;
+                houseFalconScore += amount;
                 break;
         }
     }
@@ -136,7 +136,7 @@ public class ScoreMaster : MonoBehaviour
             PlayerPrefs.SetInt("FoxScore", houseFoxScore);
             PlayerPrefs.SetInt("CatScore", houseCatScore);
             PlayerPrefs.SetInt("DragonScore", houseDragonScore);
-            PlayerPrefs.SetInt("OwlScore", houseOwlScore);
+            PlayerPrefs.SetInt("OwlScore", houseFalconScore);
         } else 
         {
             int tempFox = PlayerPrefs.GetInt("FoxScore");
@@ -147,7 +147,7 @@ public class ScoreMaster : MonoBehaviour
             tempFox += houseFoxScore;
             tempCat += houseCatScore;
             tempDragon += houseDragonScore;
-            tempOwl += houseOwlScore;
+            tempOwl += houseFalconScore;
 
             PlayerPrefs.SetInt("FoxScore", tempFox);
             PlayerPrefs.SetInt("CatScore", tempCat);
@@ -157,7 +157,7 @@ public class ScoreMaster : MonoBehaviour
             houseFoxScore = tempFox;
             houseCatScore = tempCat;
             houseDragonScore = tempDragon;
-            houseOwlScore = tempOwl;
+            houseFalconScore = tempOwl;
 
             PlayerPrefs.Save();
         }

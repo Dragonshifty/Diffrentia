@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class MainGame : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI cardsRemainingText;
@@ -47,9 +48,9 @@ public class MainGame : MonoBehaviour
         SoundHandler.Instance.PlayMusic(true);
     }
 
-    private void Update() {
-        if (gameOver) EndGame();
-    }
+    // private void Update() {
+    //     if (gameOver) EndGame();
+    // }
 
     public void NewGame()
     {
@@ -161,7 +162,11 @@ public class MainGame : MonoBehaviour
             deck[lastCard].SetActive(true);
             sortOrderInt++;
             deck[lastCard].GetComponent<ObjectDetails>().RaiseSortingOrder(sortOrderInt);
-        }
+        } 
+        // else
+        // {
+        //     gameOver = true;
+        // }
     }
 
     public void GetCardToPlay(GameObject cardPick)
@@ -236,8 +241,14 @@ public class MainGame : MonoBehaviour
                 moveCards.DistributeCards(playerHand, true);
                 ShowTop();
                 EnablePlayerHand(false);
-                
-                RunCompyTurn();
+                if (deck.Count == 0)
+                {
+                    gameOver = true;
+                    StartCoroutine(EndGame());
+                } else
+                {
+                    RunCompyTurn();
+                }
             } else
             {
                 compyHand.Add(deck[GetDeckLastCardIndex()]);
@@ -246,6 +257,11 @@ public class MainGame : MonoBehaviour
                 SortHand(compyHand);
                 moveCards.DistributeCards(compyHand, false);
                 ShowTop();
+                if (deck.Count == 0)
+                {
+                    gameOver = true;
+                    StartCoroutine(EndGame());
+                } 
             }
         }
     }
@@ -372,15 +388,15 @@ public class MainGame : MonoBehaviour
         cardsRemainingText.text = deck.Count.ToString();
     }
 
-    // IEnumerator EndGame()
-    // {
-    //     yield return new WaitForSeconds(2);
-        
-    //     sceneStuffs.LoadWinConditions();
-    // }
-    void EndGame()
+    IEnumerator EndGame()
     {
+        yield return new WaitForSeconds(2);
+        
         sceneStuffs.LoadWinConditions();
     }
+    // void EndGame()
+    // {
+    //     sceneStuffs.LoadWinConditions();
+    // }
 
 }

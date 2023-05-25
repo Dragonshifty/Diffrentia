@@ -25,6 +25,26 @@ public class WinLoseConditions : MonoBehaviour
     [SerializeField] TextMeshProUGUI winLoseOrDrawText;
     [SerializeField] TextMeshProUGUI conditionsMessage;
 
+    // ScoreDataTransfer scoreDataTransfer;
+
+    public enum WinLossType
+    {
+        VeryCloseWin,
+        CloseWin,
+        GeneralWin,
+        BigWin,
+        VeryCloseLoss,
+        CloseLoss,
+        GeneralLoss,
+        BigLoss,
+        Draw
+    } 
+
+    void Awake() 
+    {
+        // scoreDataTransfer = FindObjectOfType<ScoreDataTransfer>();    
+    }
+
     private void Start() 
     {
         drawMessages.Add("Alright, let's call it a draw");
@@ -171,14 +191,23 @@ public class WinLoseConditions : MonoBehaviour
 
     public void RunEndGame()
     {
-        int player = ScoreMaster.Instance.PlayerScore;
-        int compy = ScoreMaster.Instance.CompyScore;
+        // int player = ScoreMaster.Instance.PlayerScore;
+        // int compy = ScoreMaster.Instance.CompyScore;
+
+        int player = ScoreDataTransfer.Instance.PlayerScore;
+        int compy = ScoreDataTransfer.Instance.CompyScore;
+
         string[] recieveInfo = CheckWinLoseConditions(player, compy);
 
-        falconPoints.text = ScoreMaster.Instance.HouseOwlScore.ToString();
-        catPoints.text = ScoreMaster.Instance.HouseCatScore.ToString();
-        foxPoints.text = ScoreMaster.Instance.HouseCatScore.ToString();
-        dragonPoints.text = ScoreMaster.Instance.HouseDragonScore.ToString();
+        // falconPoints.text = ScoreMaster.Instance.HouseOwlScore.ToString();
+        // catPoints.text = ScoreMaster.Instance.HouseCatScore.ToString();
+        // foxPoints.text = ScoreMaster.Instance.HouseFoxScore.ToString();
+        // dragonPoints.text = ScoreMaster.Instance.HouseDragonScore.ToString();
+
+        falconPoints.text = ScoreDataTransfer.Instance.FalconScore.ToString();
+        catPoints.text = ScoreDataTransfer.Instance.CatScore.ToString();
+        foxPoints.text = ScoreDataTransfer.Instance.FoxScore.ToString();
+        dragonPoints.text = ScoreDataTransfer.Instance.DragonScore.ToString();
 
         playerScore.text = player.ToString();
         compyScore.text = compy.ToString();
