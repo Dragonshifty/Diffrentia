@@ -42,7 +42,11 @@ public class SoundHandler : MonoBehaviour
         musicPlayer = GetComponent<AudioSource>();    
     }
 
-    public void PlayMusic(bool isEnabled)
+    private void Update() {
+        if (!musicPlayer.isPlaying) PlayMusic();
+    }
+
+    public void PlayMusic()
     {
         if (!musicPlayer.isPlaying)
         {
@@ -53,7 +57,7 @@ public class SoundHandler : MonoBehaviour
             musicPlayer.loop = false;
             musicPlayer.Play();
 
-            index = index++ % musicTracks.Count;
+            index = ++index % musicTracks.Count;
 
             if (index == 0) Shuffle(shuffledTracks);
         }

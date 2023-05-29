@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SceneFade : MonoBehaviour
 {
     [SerializeField] RawImage blackScreen;
+    SceneStuffs sceneStuffs;
     public float fadeSpeed = 1f;
-    private bool isFading = false;
+    // private bool isFading = false;
 
+    private void Awake() 
+    {
+        sceneStuffs = FindObjectOfType<SceneStuffs>();
+    }
     private void Start() 
     {
         StartFadeIn();    
@@ -16,7 +22,7 @@ public class SceneFade : MonoBehaviour
 
     public void StartFadeOut()
     {
-        StartCoroutine(FadeOut());
+        StartCoroutine(FadeOut(0));
     }
 
     public void StartFadeIn()
@@ -24,9 +30,20 @@ public class SceneFade : MonoBehaviour
         StartCoroutine(FadeIn());
     }
 
-    IEnumerator FadeOut()
+    public void FadeToMainGame()
     {
-        isFading = true;
+        StartCoroutine(FadeOut(3));
+    }
+
+    IEnumerator LoadMainGame()
+    {
+        sceneStuffs.LoadMainGame();
+        yield return null;
+    }
+
+    IEnumerator FadeOut(int sceneIndex)
+    {
+        // isFading = true;
         blackScreen.gameObject.SetActive(true);
 
         Color colorRef = blackScreen.color;
@@ -41,12 +58,13 @@ public class SceneFade : MonoBehaviour
             yield return null;
         }
 
-        isFading = false;
+        // isFading = false;
+        sceneStuffs.LoadMainGame();
     }
 
     private IEnumerator FadeIn()
     {
-        isFading = true;
+        // isFading = true;
         blackScreen.gameObject.SetActive(true);
 
         Color currentColor = blackScreen.color;
@@ -60,7 +78,7 @@ public class SceneFade : MonoBehaviour
             yield return null;
         }
 
-        isFading = false;
+        // isFading = false;
         blackScreen.gameObject.SetActive(false);
     }
 }

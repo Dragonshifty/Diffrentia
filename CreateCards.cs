@@ -5,7 +5,11 @@ using TMPro;
 
 public class CreateCards : MonoBehaviour
 {
-    [SerializeField] GameObject prefab;
+    [SerializeField] GameObject foxPrefab;
+    [SerializeField] GameObject catPrefab;
+    [SerializeField] GameObject dragonPrefab;
+    [SerializeField] GameObject falconPrefab;
+    GameObject prefab;
     public WaypointsSO waypointsSO;
     
     List<GameObject> deck = new List<GameObject>();
@@ -20,7 +24,7 @@ public class CreateCards : MonoBehaviour
         houses.Add("Fox");
         houses.Add("Cat");
         houses.Add("Dragon");
-        houses.Add("Owl");
+        houses.Add("Falcon");
     }
     void Start()
     {
@@ -47,6 +51,10 @@ public class CreateCards : MonoBehaviour
         foreach (string house in houses){
             for (int i = 2; i < 15; i++)
             {
+                if (house == "Fox") prefab = foxPrefab;
+                if (house == "Cat") prefab = catPrefab;
+                if (house == "Dragon") prefab = dragonPrefab;
+                if (house == "Falcon") prefab = falconPrefab;
                 GameObject card = Instantiate(prefab, waypointStart, Quaternion.Euler(0, 180f, 0));
                 ObjectDetails cardDetails = card.GetComponent<ObjectDetails>();
                 cardDetails.CardValue = i;

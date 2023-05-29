@@ -21,6 +21,7 @@ public class MainGame : MonoBehaviour
     ScoreMaster scoreMaster;
     WinLoseConditions winLoseConditions;
     SceneStuffs sceneStuffs;
+    string clan;
     int sortOrderInt = 0;
     bool gameOver = false;
     
@@ -40,12 +41,13 @@ public class MainGame : MonoBehaviour
         scoreMaster = FindObjectOfType<ScoreMaster>();
         winLoseConditions = FindObjectOfType<WinLoseConditions>();
         sceneStuffs = FindObjectOfType<SceneStuffs>();
+        clan = ScoreDataTransfer.Instance.clan;
     }
     
     void Start()
     {
         NewGame();
-        SoundHandler.Instance.PlayMusic(true);
+        // SoundHandler.Instance.PlayMusic();
     }
 
     // private void Update() {
@@ -244,7 +246,9 @@ public class MainGame : MonoBehaviour
                 if (deck.Count == 0)
                 {
                     gameOver = true;
-                    StartCoroutine(EndGame());
+                    // StartCoroutine(EndGame());
+                    sceneStuffs.LoadWinLose();
+
                 } else
                 {
                     RunCompyTurn();
@@ -261,6 +265,7 @@ public class MainGame : MonoBehaviour
                 {
                     gameOver = true;
                     StartCoroutine(EndGame());
+                    sceneStuffs.LoadWinLose();
                 } 
             }
         }
@@ -305,7 +310,7 @@ public class MainGame : MonoBehaviour
                         case 0:
                             if (!isPlayer)
                                 {
-                                    StartCoroutine(UpdateCompyScoreDelay(0, false));
+                                    StartCoroutine(UpdateCompyScoreDelay(0, cardToPlayHouse, false, false));
                                 } else
                                 {
                                     scoreMaster.LastPlayerScore = 0;
@@ -318,12 +323,15 @@ public class MainGame : MonoBehaviour
                                 difference *= 2;
                                 if (!isPlayer)
                                 {
-                                    StartCoroutine(UpdateCompyScoreDelay(difference, true));
+                                    StartCoroutine(UpdateCompyScoreDelay(difference, cardToPlayHouse, true, true));
                                 } else
                                 {
                                     scoreMaster.PlayerScore = difference;
                                     scoreMaster.LastPlayerScore = difference;
-                                    scoreMaster.HouseScore(cardToPlayHouse, difference);
+                                    if (cardToPlayHouse.Equals(clan))
+                                    {
+                                        scoreMaster.HouseScore(cardToPlayHouse, difference);
+                                    }
                                 }
                             }
                             else
@@ -331,12 +339,15 @@ public class MainGame : MonoBehaviour
                                 int difference = cardToPlayValue - cardInPlayValue;
                                 if (!isPlayer)
                                 {
-                                    StartCoroutine(UpdateCompyScoreDelay(difference, true));
+                                    StartCoroutine(UpdateCompyScoreDelay(difference, cardToPlayHouse, true, true));
                                 } else
                                 {
                                     scoreMaster.PlayerScore = difference;
                                     scoreMaster.LastPlayerScore = difference;
-                                    scoreMaster.HouseScore(cardToPlayHouse, difference);
+                                    if (cardToPlayHouse.Equals(clan))
+                                    {
+                                        scoreMaster.HouseScore(cardToPlayHouse, difference);
+                                    }
                                 }
                             }
                             break;
@@ -345,7 +356,7 @@ public class MainGame : MonoBehaviour
                             {
                                 if (!isPlayer)
                                 {
-                                    StartCoroutine(UpdateCompyScoreDelay(0, false));
+                                    StartCoroutine(UpdateCompyScoreDelay(0, cardToPlayHouse, false, false));
                                 } else
                                 {
                                     scoreMaster.LastPlayerScore = 0;
@@ -356,7 +367,7 @@ public class MainGame : MonoBehaviour
                                 int difference = cardInPlayValue - cardToPlayValue;
                                 if (!isPlayer)
                                 {
-                                    StartCoroutine(UpdateCompyScoreDelay(-difference, true));
+                                    StartCoroutine(UpdateCompyScoreDelay(-difference, cardToPlayHouse, true, false));
                                 } else
                                 {
                                     scoreMaster.PlayerScore = -difference;
@@ -368,7 +379,7 @@ public class MainGame : MonoBehaviour
         }
     }
 
-    IEnumerator UpdateCompyScoreDelay(int score, bool both)
+    IEnumerator UpdateCompyScoreDelay(int score, string cardToPlayHouse, bool both, bool notMinus)
     {
         yield return new WaitForSeconds((float)1.6);
         
@@ -376,6 +387,10 @@ public class MainGame : MonoBehaviour
         {
         scoreMaster.CompyScore = score;
         scoreMaster.LastCompyScore = score;
+        if (!cardToPlayHouse.Equals(clan) && true)
+            {
+                scoreMaster.HouseScore(cardToPlayHouse, score);
+            }
         } else
         {
             scoreMaster.LastCompyScore = score;
@@ -390,7 +405,7 @@ public class MainGame : MonoBehaviour
 
     IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds((float)2.5);
         
         sceneStuffs.LoadWinConditions();
     }
