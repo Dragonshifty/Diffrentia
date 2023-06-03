@@ -15,6 +15,7 @@ public class WinLoseConditions : MonoBehaviour
     List<string> closeLoss = new List<string>();
     List<string> generalLoss = new List<string>();
     List<string> bigLoss = new List<string>();
+    string clan = "";
 
     [SerializeField] TextMeshProUGUI falconPoints;
     [SerializeField] TextMeshProUGUI foxPoints;
@@ -24,6 +25,7 @@ public class WinLoseConditions : MonoBehaviour
     [SerializeField] TextMeshProUGUI compyScore;
     [SerializeField] TextMeshProUGUI winLoseOrDrawText;
     [SerializeField] TextMeshProUGUI conditionsMessage;
+    // List<TextMeshProUGUI> pointsTextList;
 
     // ScoreDataTransfer scoreDataTransfer;
 
@@ -42,11 +44,16 @@ public class WinLoseConditions : MonoBehaviour
 
     void Awake() 
     {
-        // scoreDataTransfer = FindObjectOfType<ScoreDataTransfer>();    
+        
     }
 
     private void Start() 
     {
+        // pointsTextList.Add(falconPoints);
+        // pointsTextList.Add(foxPoints);
+        // pointsTextList.Add(catPoints);
+        // pointsTextList.Add(dragonPoints);
+
         drawMessages.Add("Alright, let's call it a draw");
         drawMessages.Add("A draw! Yay. Well done, you.");
 
@@ -191,19 +198,13 @@ public class WinLoseConditions : MonoBehaviour
 
     public void RunEndGame()
     {
-        // int player = ScoreMaster.Instance.PlayerScore;
-        // int compy = ScoreMaster.Instance.CompyScore;
 
         int player = ScoreDataTransfer.Instance.PlayerScore;
         int compy = ScoreDataTransfer.Instance.CompyScore;
 
         string[] recieveInfo = CheckWinLoseConditions(player, compy);
 
-        // falconPoints.text = ScoreMaster.Instance.HouseOwlScore.ToString();
-        // catPoints.text = ScoreMaster.Instance.HouseCatScore.ToString();
-        // foxPoints.text = ScoreMaster.Instance.HouseFoxScore.ToString();
-        // dragonPoints.text = ScoreMaster.Instance.HouseDragonScore.ToString();
-
+        clan = ScoreDataTransfer.Instance.clan;
         falconPoints.text = ScoreDataTransfer.Instance.FalconScore.ToString();
         catPoints.text = ScoreDataTransfer.Instance.CatScore.ToString();
         foxPoints.text = ScoreDataTransfer.Instance.FoxScore.ToString();
@@ -212,8 +213,30 @@ public class WinLoseConditions : MonoBehaviour
         playerScore.text = player.ToString();
         compyScore.text = compy.ToString();
 
+        PointsColour();
+
         conditionsMessage.text = recieveInfo[0];
         winLoseOrDrawText.text = recieveInfo[1];
+    }
+
+    void PointsColour()
+    {
+        Debug.Log(clan);
+        switch (clan)
+        {
+            case "Cat":
+                catPoints.color = new Color32(255, 4, 229, 255);
+                break;
+            case "Dragon":
+                dragonPoints.color = new Color32(255, 4, 229, 255);
+                break;
+            case "Fox":
+                foxPoints.color = new Color32(255, 4, 229, 255);
+                break;
+            case "Falcon":
+                falconPoints.color = new Color32(255, 4, 229, 255);
+                break;
+        }
     }
 
     private string RunDrawMessages()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ScoreMaster : MonoBehaviour
@@ -13,6 +14,7 @@ public class ScoreMaster : MonoBehaviour
     [SerializeField] TextMeshProUGUI owlScoreText;
     [SerializeField] TextMeshProUGUI dragonScoreText;
     [SerializeField] TextMeshProUGUI catScoreText;
+    [SerializeField] Image quadrinityRemaining;
     
     int playerScore;
     int compyScore;
@@ -49,10 +51,10 @@ public class ScoreMaster : MonoBehaviour
         compyTotalText.text = compyScore.ToString();
         playerLastScoreText.text = lastPlayerScore.ToString();
         compyLastScoreText.text = lastCompyScore.ToString();
-        foxScoreText.text = $"F: {houseFoxScore.ToString()}";
-        owlScoreText.text = $"O: {houseFalconScore.ToString()}";
-        dragonScoreText.text = $"{houseDragonScore.ToString()}: D";
-        catScoreText.text = $"{houseCatScore.ToString()}: C";
+        foxScoreText.text = houseFoxScore.ToString();
+        owlScoreText.text = houseFalconScore.ToString();
+        dragonScoreText.text = houseDragonScore.ToString();
+        catScoreText.text = houseCatScore.ToString();
         
     }
 
@@ -60,6 +62,7 @@ public class ScoreMaster : MonoBehaviour
     {
         // UpdatePlayerPrefs(); 
     }
+
 
 
     public int PlayerScore

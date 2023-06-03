@@ -6,10 +6,17 @@ using TMPro;
 
 public class ClanSelection : MonoBehaviour
 {
+    [Header("ClanImages")]
     [SerializeField] GameObject falconImage;
     [SerializeField] GameObject catImage;
     [SerializeField] GameObject dragonImage;
     [SerializeField] GameObject foxImage;
+    [Header("ClanCircles")]
+    [SerializeField] GameObject falconCircle;
+    [SerializeField] GameObject catCircle;
+    [SerializeField] GameObject foxCircle;
+    [SerializeField] GameObject dragonCircle;
+    [Header("Texts")]
     [SerializeField] TextMeshProUGUI falconText;
     [SerializeField] TextMeshProUGUI catText;
     [SerializeField] TextMeshProUGUI dragonText;
@@ -80,28 +87,48 @@ public class ClanSelection : MonoBehaviour
         switch (clanName)
         {
             case "Falcon":
-                falconText.text = "Falcon";
-                catText.text = "";
-                dragonText.text = "";
-                foxText.text = "";              
+                // falconText.text = "Falcon";
+                // catText.text = "";
+                // dragonText.text = "";
+                // foxText.text = "";  
+
+                falconCircle.SetActive(true);
+                catCircle.SetActive(false);
+                foxCircle.SetActive(false);
+                dragonCircle.SetActive(false);            
                 break;
             case "Cat":
-                falconText.text = "";
-                catText.text = "Cat";
-                dragonText.text = "";
-                foxText.text = "";
+                // falconText.text = "";
+                // catText.text = "Cat";
+                // dragonText.text = "";
+                // foxText.text = "";
+
+                falconCircle.SetActive(false);
+                catCircle.SetActive(true);
+                foxCircle.SetActive(false);
+                dragonCircle.SetActive(false);
                 break;
             case "Dragon":
-                falconText.text = "";
-                catText.text = "";
-                dragonText.text = "Dragon";
-                foxText.text = "";
+                // falconText.text = "";
+                // catText.text = "";
+                // dragonText.text = "Dragon";
+                // foxText.text = "";
+
+                falconCircle.SetActive(false);
+                catCircle.SetActive(false);
+                foxCircle.SetActive(false);
+                dragonCircle.SetActive(true);
                 break;
             case "Fox":
-                falconText.text = "";
-                catText.text = "";
-                dragonText.text = "";
-                foxText.text = "Fox";
+                // falconText.text = "";
+                // catText.text = "";
+                // dragonText.text = "";
+                // foxText.text = "Fox";
+
+                falconCircle.SetActive(false);
+                catCircle.SetActive(false);
+                foxCircle.SetActive(true);
+                dragonCircle.SetActive(false);
                 break;
         }
     }

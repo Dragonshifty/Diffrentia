@@ -27,18 +27,18 @@ public class SceneStuffs : MonoBehaviour
 
     public void LoadMainGame()
     {
-        StartCoroutine(FadeOut(1));
+        StartCoroutine(FadeOut(2));
         // SceneManager.LoadScene(0);
     }
 
     public void LoadClanSelection()
     {
-        StartCoroutine(FadeOut(0));
+        StartCoroutine(FadeOut(1));
     }
 
     public void LoadWinLose()
     {
-        StartCoroutine(FadeOut(2));
+        StartCoroutine(FadeOut(3));
     }
 
     public void LoadWinConditions()
@@ -81,8 +81,11 @@ public class SceneStuffs : MonoBehaviour
                 SceneManager.LoadScene(1);
                 break;
             case 2:
-                LoadWinConditions();
                 SceneManager.LoadScene(2);
+                break;
+            case 3:
+                LoadWinConditions();
+                SceneManager.LoadScene(3);
                 break;
         }
     }

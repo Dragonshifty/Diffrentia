@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 
 public class MainGame : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI cardsRemainingText;
+    [SerializeField] Image quadRemaning;
     public static MainGame Instance { get; private set; }
     List<GameObject> deck = new List<GameObject>();
     List<GameObject> playerHand = new List<GameObject>();
@@ -24,6 +26,7 @@ public class MainGame : MonoBehaviour
     string clan;
     int sortOrderInt = 0;
     bool gameOver = false;
+    bool playerWonToss = false;
     
     void Awake() {
         if (Instance == null)
@@ -76,6 +79,7 @@ public class MainGame : MonoBehaviour
             GetCardToPlay(compyHand[pick]);
         } else
         {
+            playerWonToss = true;
             StartCoroutine(EnablePlayerHand(true));
         }
         yield return null;
@@ -106,6 +110,7 @@ public class MainGame : MonoBehaviour
         scoreMaster.ResetScores();
         moveCards.newGameIndicator = 0;
         sortOrderInt = 0;
+        playerWonToss = false;
     }
 
     void GetNewDeck()
@@ -239,6 +244,7 @@ public class MainGame : MonoBehaviour
                 playerHand.Add(deck[GetDeckLastCardIndex()]);
                 deck.RemoveAt(GetDeckLastCardIndex());
                 cardsRemainingText.text = deck.Count.ToString();
+                UpdateQuadRemaning();
                 SortHand(playerHand);
                 moveCards.DistributeCards(playerHand, true);
                 ShowTop();
@@ -265,7 +271,7 @@ public class MainGame : MonoBehaviour
                 {
                     gameOver = true;
                     StartCoroutine(EndGame());
-                    sceneStuffs.LoadWinLose();
+                    // sceneStuffs.LoadWinLose();
                 } 
             }
         }
@@ -387,7 +393,7 @@ public class MainGame : MonoBehaviour
         {
         scoreMaster.CompyScore = score;
         scoreMaster.LastCompyScore = score;
-        if (!cardToPlayHouse.Equals(clan) && true)
+        if (!cardToPlayHouse.Equals(clan) && notMinus)
             {
                 scoreMaster.HouseScore(cardToPlayHouse, score);
             }
@@ -401,17 +407,22 @@ public class MainGame : MonoBehaviour
     {
         yield return new WaitForSeconds((float)1.6);
         cardsRemainingText.text = deck.Count.ToString();
+        UpdateQuadRemaning();
     }
 
     IEnumerator EndGame()
     {
-        yield return new WaitForSeconds((float)2.5);
+        float waitTime = playerWonToss ? 2.5f : 4f;
+        yield return new WaitForSeconds((float)waitTime);
         
-        sceneStuffs.LoadWinConditions();
+        // sceneStuffs.LoadWinConditions();
+        sceneStuffs.LoadWinLose();
     }
-    // void EndGame()
-    // {
-    //     sceneStuffs.LoadWinConditions();
-    // }
+    
+    void UpdateQuadRemaning()
+    {
+        float fillLevel = (float)deck.Count / 42f;
+        quadRemaning.fillAmount = fillLevel;
+    }
 
 }
