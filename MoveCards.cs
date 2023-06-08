@@ -158,11 +158,11 @@ public class MoveCards : MonoBehaviour
     }
 
     
-    IEnumerator PlaySingleCard()
-    {
-        soundHandler.PlaySingleCardA();
-        yield return null;
-    }
+    // IEnumerator PlaySingleCard()
+    // {
+    //     soundHandler.PlaySingleCardA();
+    //     yield return null;
+    // }
 
 
     IEnumerator ShowTop(GameObject topCard)

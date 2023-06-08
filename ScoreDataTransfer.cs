@@ -185,12 +185,18 @@ public class ScoreDataTransfer : MonoBehaviour
 
     public void ClearPlayerPrefs()
     {
-        PlayerPrefs.SetInt("FoxScore", 0);
-        PlayerPrefs.SetInt("CatScore", 0);
-        PlayerPrefs.SetInt("DragonScore", 0);
-        PlayerPrefs.SetInt("FalconScore", 0);
-        PlayerPrefs.SetInt("ClanChosen", 0);
-        PlayerPrefs.Save();
+        try 
+        {
+            PlayerPrefs.SetInt("FoxScore", 0);
+            PlayerPrefs.SetInt("CatScore", 0);
+            PlayerPrefs.SetInt("DragonScore", 0);
+            PlayerPrefs.SetInt("FalconScore", 0);
+            PlayerPrefs.SetInt("ClanChosen", 0);
+            PlayerPrefs.Save();
+        } catch (PlayerPrefsException ex)
+        {
+            Debug.LogError("Error PlayerPrefs: " + ex.Message);
+        }
     }
 
     public void SetClan(string clanChoice)

@@ -29,6 +29,7 @@ public class StartGame : MonoBehaviour
 
     void OnMouseDown() 
     {
+        SoundHandler.Instance.PlayDragonBegin();
         if (gameObject != null && canStart == true)
         {
             sceneStuffs.LoadClanSelection();

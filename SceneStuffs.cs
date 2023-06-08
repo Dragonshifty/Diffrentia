@@ -27,6 +27,7 @@ public class SceneStuffs : MonoBehaviour
 
     public void LoadMainGame()
     {
+        SoundHandler.Instance.PlayDragonFlight();
         StartCoroutine(FadeOut(2));
         // SceneManager.LoadScene(0);
     }

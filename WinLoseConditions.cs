@@ -136,7 +136,11 @@ public class WinLoseConditions : MonoBehaviour
                 case "BigLoss":
                     returnInfo[0] = RunBigLoss();
                     returnInfo[1] = "Lose";
-                    break;  
+                    break;
+                case "Draw":
+                    returnInfo[0] = RunDrawMessages();
+                    returnInfo[1] = "Draw";
+                    break;
                 default:
                     returnInfo[0] = "?";
                     returnInfo[1] = "?";
