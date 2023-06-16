@@ -42,11 +42,6 @@ public class WinLoseConditions : MonoBehaviour
         Draw
     } 
 
-    void Awake() 
-    {
-        
-    }
-
     private void Start() 
     {
         // pointsTextList.Add(falconPoints);
@@ -67,7 +62,7 @@ public class WinLoseConditions : MonoBehaviour
         closeWin.Add("Actual skill or just lucky? We may never know.");
         closeWin.Add("This is promising.");
 
-        generalWin.Add("Very convinving win.");
+        generalWin.Add("Very convincing win.");
         generalWin.Add("That'll do it.");
         generalWin.Add("Things are looking up.");
 
@@ -84,7 +79,7 @@ public class WinLoseConditions : MonoBehaviour
         closeLoss.Add("Could have gone either way. Kinda.");
 
         bigLoss.Add("That could have gone better.");
-        bigLoss.Add("Hacks, obviously.");
+        bigLoss.Add("I suspect foul play.");
         bigLoss.Add("Moving on...");
         bigLoss.Add("Ouch.");
 
@@ -225,20 +220,20 @@ public class WinLoseConditions : MonoBehaviour
 
     void PointsColour()
     {
-        Debug.Log(clan);
+        // Debug.Log(clan);
         switch (clan)
         {
             case "Cat":
-                catPoints.color = new Color32(255, 4, 229, 255);
+                catPoints.color = new Color32(202, 39, 37, 255);
                 break;
             case "Dragon":
-                dragonPoints.color = new Color32(255, 4, 229, 255);
+                dragonPoints.color = new Color32(202, 39, 37, 255);
                 break;
             case "Fox":
-                foxPoints.color = new Color32(255, 4, 229, 255);
+                foxPoints.color = new Color32(202, 39, 37, 255);
                 break;
             case "Falcon":
-                falconPoints.color = new Color32(255, 4, 229, 255);
+                falconPoints.color = new Color32(202, 39, 37, 255);
                 break;
         }
     }

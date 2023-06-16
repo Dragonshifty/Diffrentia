@@ -23,6 +23,7 @@ public class MainGame : MonoBehaviour
     ScoreMaster scoreMaster;
     WinLoseConditions winLoseConditions;
     SceneStuffs sceneStuffs;
+    CoinTossHandler coinTossHandler;
     string clan;
     int sortOrderInt = 0;
     bool gameOver = false;
@@ -44,6 +45,7 @@ public class MainGame : MonoBehaviour
         scoreMaster = FindObjectOfType<ScoreMaster>();
         winLoseConditions = FindObjectOfType<WinLoseConditions>();
         sceneStuffs = FindObjectOfType<SceneStuffs>();
+        coinTossHandler = FindObjectOfType<CoinTossHandler>();
         clan = ScoreDataTransfer.Instance.clan;
     }
     
@@ -76,10 +78,12 @@ public class MainGame : MonoBehaviour
         if (toss == 1)
         {
             int pick = rand.Next(0, 5);
+            coinTossHandler.WhoStarts(false, true);
             GetCardToPlay(compyHand[pick]);
         } else
         {
             playerWonToss = true;
+            coinTossHandler.WhoStarts(true, true);
             StartCoroutine(EnablePlayerHand(true));
         }
         yield return null;
@@ -279,12 +283,13 @@ public class MainGame : MonoBehaviour
 
     void RunCompyTurn()
     {
-        if (deck.Count == 0)
+        int deckCount = deck.Count;
+        if (deckCount == 0)
         {
             gameOver = true;
             // StartCoroutine(EndGame());
         }
-        GetCardToPlay(compy.CompyChoice(compyHand, cardInPlay));
+        GetCardToPlay(compy.CompyChoice(compyHand, cardInPlay, deckCount));
     }
 
     public IEnumerator EnablePlayerHand(bool isEnabled)

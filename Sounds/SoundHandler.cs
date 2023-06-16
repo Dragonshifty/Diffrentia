@@ -13,10 +13,6 @@ public class SoundHandler : MonoBehaviour
     }
 
     [SerializeField] List<AudioClip> musicTracks;
-    // [SerializeField] AudioClip singleCardA;
-    // [SerializeField] AudioClip singleCardB;
-    // [SerializeField] AudioClip shuffleA;
-    // [SerializeField] AudioClip shuffleB;
     [SerializeField] AudioClip dragonFlight;
     [SerializeField] AudioClip dragonStart;
     [SerializeField] AudioClip catPurr;
@@ -46,7 +42,7 @@ public class SoundHandler : MonoBehaviour
     private void Start() 
     {
         musicPlayer = GetComponent<AudioSource>();
-        musicPlayer.volume = 0.4f;   
+        musicPlayer.volume = 0.35f;   
         musicPlayer.clip = musicTracks[5];
         musicPlayer.loop = false;
         musicPlayer.Play(); 
@@ -86,7 +82,7 @@ public class SoundHandler : MonoBehaviour
 
     public void PlayCatSound()
     {
-        PlayClip(catPurr,cardVolume);
+        PlayClip(catPurr, cardVolume);
     }
 
     public void PlayFoxSound()

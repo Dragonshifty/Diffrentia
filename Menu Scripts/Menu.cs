@@ -13,30 +13,28 @@ public class Menu : MonoBehaviour
     private int catPoints;
     private int dragonPoints;
     private int falconPoints;
-    private string currentLeaders;
-    private int currentLeadersScore;
-    public TextMeshProUGUI tick;
+    // private string currentLeaders;
+    // private int currentLeadersScore;
+    // public TextMeshProUGUI tick;
     private Dictionary<string, int> clanPoints;
 
     Ticker ticker;
+    BattleInfo battleInfo;
+    SceneStuffs sceneStuffs;
     
 
     private void Awake() 
     {
-       CheckForClan();
+        sceneStuffs = FindObjectOfType<SceneStuffs>();
+        ticker = FindObjectOfType<Ticker>();
+        CheckForClan();
     }
     void Start()
     {
-        // tick = GetComponent<Ticker>();
-        CheckHighest();
+        // ticker = FindObjectOfType<Ticker>();
         RunTicker();
     }
 
-    
-    void Update()
-    {
-        
-    }
 
     void CheckForClan()
     {
@@ -60,6 +58,7 @@ public class Menu : MonoBehaviour
                 PlayerPrefs.SetInt("CatScore", 0);
                 PlayerPrefs.SetInt("DragonScore", 0);
                 PlayerPrefs.SetInt("FalconScore", 0);
+                PlayerPrefs.SetInt("ClanChosen", 0);
                 PlayerPrefs.Save();
             } else
             {
@@ -76,8 +75,19 @@ public class Menu : MonoBehaviour
                     {"Dragon", dragonPoints},
                     {"Falcon", falconPoints}
                 };
-                // SetClan(playerClan);
+                SetClan(playerClan);
                 playerPoints = clanPoints[playerClan];
+                string currentLeader =  CheckHighest();
+                int leaderPoints = clanPoints[currentLeader];
+                battleInfo = new BattleInfo(
+                    foxPoints, 
+                    catPoints, 
+                    dragonPoints, 
+                    falconPoints, 
+                    playerPoints, 
+                    leaderPoints, 
+                    playerClan, 
+                    currentLeader);
             }
         } catch (PlayerPrefsException ex)
         {
@@ -90,21 +100,45 @@ public class Menu : MonoBehaviour
         ScoreDataTransfer.Instance.SetClan(clanName);
     }
 
-    void CheckHighest()
+    string CheckHighest()
     {
+        string currentLeader = "";
         if (hasChosen)
         {
             var highestScore = clanPoints.Aggregate((x, y) => x.Value > y.Value ? x : y);
-            currentLeaders = highestScore.Key;
-            currentLeadersScore = highestScore.Value;
+            currentLeader = highestScore.Key;
+            // currentLeadersScore = highestScore.Value;
         }
+        return currentLeader;
     }
 
     void RunTicker()
     {
-        ticker.StartScrolling(currentLeaders, currentLeadersScore, playerClan, playerPoints, true);
-        Debug.Log(currentLeaders + currentLeadersScore.ToString() + playerClan + playerPoints.ToString());
+        if (hasChosen) ticker.StartScrolling(battleInfo);
+    }
+
+    public void RunMainGame()
+    {
+        if (hasChosen)
+        {
+            sceneStuffs.LoadMainGame();
+        } else
+        {
+            sceneStuffs.LoadClanSelection();
+        }
     }
 
     
+
+    public void ResetGame()
+    {
+        hasChosen = false;
+        ScoreDataTransfer.Instance.ClearPlayerPrefs();
+        sceneStuffs.LoadClanSelection();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

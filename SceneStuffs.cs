@@ -25,6 +25,11 @@ public class SceneStuffs : MonoBehaviour
         MainGame.Instance.NewGame();
     }
 
+    public void LoadMenu()
+    {
+        StartCoroutine(FadeOut(1));
+    }
+
     public void LoadMainGame()
     {
         SoundHandler.Instance.PlayDragonFlight();
@@ -34,7 +39,7 @@ public class SceneStuffs : MonoBehaviour
 
     public void LoadClanSelection()
     {
-        StartCoroutine(FadeOut(1));
+        StartCoroutine(FadeOut(4));
     }
 
     public void LoadWinLose()
@@ -77,8 +82,7 @@ public class SceneStuffs : MonoBehaviour
             case 0:
                 SceneManager.LoadScene(0);
                 break;
-            case 1:
-                
+            case 1:             
                 SceneManager.LoadScene(1);
                 break;
             case 2:
@@ -87,6 +91,9 @@ public class SceneStuffs : MonoBehaviour
             case 3:
                 LoadWinConditions();
                 SceneManager.LoadScene(3);
+                break;
+            case 4:
+                SceneManager.LoadScene(4);
                 break;
         }
     }

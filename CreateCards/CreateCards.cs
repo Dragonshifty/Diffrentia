@@ -51,10 +51,10 @@ public class CreateCards : MonoBehaviour
         foreach (string house in houses){
             for (int i = 2; i < 15; i++)
             {
-                if (house == "Fox") prefab = foxPrefab;
-                if (house == "Cat") prefab = catPrefab;
-                if (house == "Dragon") prefab = dragonPrefab;
-                if (house == "Falcon") prefab = falconPrefab;
+                if (house.Equals("Fox")) prefab = foxPrefab;
+                if (house.Equals("Cat")) prefab = catPrefab;
+                if (house.Equals("Dragon")) prefab = dragonPrefab;
+                if (house.Equals("Falcon")) prefab = falconPrefab;
                 GameObject card = Instantiate(prefab, waypointStart, Quaternion.Euler(0, 180f, 0));
                 ObjectDetails cardDetails = card.GetComponent<ObjectDetails>();
                 cardDetails.CardValue = i;

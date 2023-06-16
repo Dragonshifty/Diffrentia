@@ -24,7 +24,6 @@ public class ClanSelection : MonoBehaviour
     [SerializeField] GameObject startButton;
     [SerializeField] GameObject resetButton;
     [SerializeField] TextMeshProUGUI chooseClanText;
-    // private bool hasChosen = false;
 
     private void Awake() 
     {
@@ -44,6 +43,7 @@ public class ClanSelection : MonoBehaviour
             string tempClan = PlayerPrefs.GetString("Clan");
             ShowClanText(tempClan);
             startButton.gameObject.SetActive(true);
+            SetClan(tempClan);
         }
     }
 
@@ -78,7 +78,6 @@ public class ClanSelection : MonoBehaviour
     void SetClan(string clanName)
     {
         ShowClanText(clanName);
-        // hasChosen = true;
         startButton.gameObject.SetActive(true);
         ScoreDataTransfer.Instance.SetClan(clanName);
     }

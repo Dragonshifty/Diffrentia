@@ -174,14 +174,11 @@ public class ScoreDataTransfer : MonoBehaviour
             dragonScore = tempDragon;
             falconScore = tempFalcon;
         }
-
-        // PlayerPrefs.SetInt("FoxScore", FoxScore);
-        // PlayerPrefs.SetInt("CatScore", CatScore);
-        // PlayerPrefs.SetInt("DragonScore", DragonScore);
-        // PlayerPrefs.SetInt("FalconScore", FalconScore);
         
         PlayerPrefs.Save();
     }
+
+    
 
     public void ClearPlayerPrefs()
     {

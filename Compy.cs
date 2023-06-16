@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Compy : MonoBehaviour
 {
-
-    int returnIndex;
-
-    public GameObject CompyChoice(List<GameObject> compyHand, GameObject cardInPlay)
+    public GameObject CompyChoice(List<GameObject> compyHand, GameObject cardInPlay, int deckCount)
     {
         int[] scoreTemp = new int[5];
         int cardInPlayValue = cardInPlay.GetComponent<ObjectDetails>().CardValue;
@@ -36,22 +33,65 @@ public class Compy : MonoBehaviour
                 }
         }
 
-        int max = scoreTemp[0];
-            for (int i = 0; i < scoreTemp.Length; i++)
-            {
-                if (max < scoreTemp[i])
-                {
-                    max = scoreTemp[i];
-                    returnIndex = i;
-                }
-            }
+        // int max = scoreTemp[0];
+        // int secondHighest = int.MinValue;
+        // int returnIndex = 0;
+        // int returnIndex2 = -1;
+        //     for (int i = 0; i < scoreTemp.Length; i++)
+        //     {
+        //         if (max < scoreTemp[i])
+        //         {
+        //             secondHighest = max;
+        //             returnIndex2 = returnIndex;
+        //             max = scoreTemp[i];
+        //             returnIndex = i;
+        //         } else if (scoreTemp[i] < max && scoreTemp[i] > secondHighest)
+        //         {
+        //             secondHighest = scoreTemp[i];
+        //             returnIndex2 = i;
+        //         }
+        //     }
+
+        // if (deckCount > 20 && max <= 10 && secondHighest >= 2)
+        // {
+        //     int rand = UnityEngine.Random.Range(0, 2);
+        //     if (rand == 0) returnIndex = returnIndex2;
+        // }
+
+        int returnIndex = RunPossibleChoice(scoreTemp, deckCount);
+
+        Debug.Log($"Played: {scoreTemp[returnIndex].ToString()} : {scoreTemp[0].ToString()} : {scoreTemp[1].ToString()} : {scoreTemp[2].ToString()} : {scoreTemp[3].ToString()} : {scoreTemp[4].ToString()}");
+
         return compyHand[returnIndex];
     }
 
-    
-
-    public int GetTest()
+    int RunPossibleChoice(int[] scoreTemp, int deckCount)
     {
-        return 1;
+        int max = scoreTemp[0];
+        int secondHighest = int.MinValue;
+        int returnIndex = 0;
+        int returnIndex2 = -1;
+
+        for (int i = 0; i < scoreTemp.Length; i++)
+        {
+            if (max < scoreTemp[i])
+            {
+                secondHighest = max;
+                returnIndex2 = returnIndex;
+                max = scoreTemp[i];
+                returnIndex = i;
+            } else if (scoreTemp[i] < max && scoreTemp[i] > secondHighest)
+            {
+                secondHighest = scoreTemp[i];
+                returnIndex2 = i;
+            }
+        }
+
+        if (deckCount > 20 && max <= 10 && secondHighest >= 2)
+        {
+            int rand = UnityEngine.Random.Range(0, 2);
+            if (rand == 0) returnIndex = returnIndex2;
+        }
+        return returnIndex;
     }
 }

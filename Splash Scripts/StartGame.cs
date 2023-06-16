@@ -32,7 +32,7 @@ public class StartGame : MonoBehaviour
         SoundHandler.Instance.PlayDragonBegin();
         if (gameObject != null && canStart == true)
         {
-            sceneStuffs.LoadClanSelection();
+            sceneStuffs.LoadMenu();
         }
     }
 

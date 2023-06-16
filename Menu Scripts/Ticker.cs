@@ -9,8 +9,9 @@ public class Ticker : MonoBehaviour
     private RectTransform textScroll;
     private bool canScroll;
     private TextMeshProUGUI tickerScroll;
+    private BattleInfo battleInfo;
 
-    void Start()
+    void Awake()
     {
         textScroll = GetComponent<RectTransform>();
         tickerScroll = GetComponent<TextMeshProUGUI>();
@@ -31,9 +32,10 @@ public class Ticker : MonoBehaviour
         
     }
 
-    public void StartScrolling(string leader, int leaderScore, string clanChoice,  int playerScore, bool doStart)
+    public void StartScrolling(BattleInfo battleInfo)
     {
-        tickerScroll.text = $"{leader} is in the lead with {leaderScore.ToString()}points. You Clan {clanChoice} has {playerScore.ToString()}points.";
-        canScroll = doStart;
+        this.battleInfo = battleInfo;
+        tickerScroll.text = $"{battleInfo.CurrentLeader} is in the lead with {battleInfo.LeaderPoints.ToString()} points. Your Clan {battleInfo.PlayerClan} has {battleInfo.PlayerPoints.ToString()} points.";
+        canScroll = true;
     }
 }

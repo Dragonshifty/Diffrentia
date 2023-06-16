@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI minutesNum;
     public TextMeshProUGUI minutesText;
     public TextMeshProUGUI secondsNum;
-    // int countdownSeconds = 60;
+
 
     private void Awake() 
     {
@@ -25,12 +25,31 @@ public class Timer : MonoBehaviour
     {
         DateTime currentDateTime = DateTime.Now;
 
-        DateTime nextSunday = GetNextSunday(currentDateTime);
-        DateTime targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
+        if (currentDateTime.DayOfWeek == DayOfWeek.Sunday)
+        {
+            DateTime nextSunday = GetNextSunday(currentDateTime);
+            DateTime targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
 
-        TimeSpan timeDifference = targetDateTime - currentDateTime;
+            TimeSpan timeDifference = targetDateTime - currentDateTime;
 
-        await StartCountDown(timeDifference);
+            if (timeDifference.TotalSeconds > 0)
+            {
+                await StartCountDown(timeDifference);
+            }
+            else
+            {
+                //
+            }
+        }
+        else
+        {
+            DateTime nextSunday = GetNextSunday(currentDateTime);
+            DateTime targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
+
+            TimeSpan timeDifference = targetDateTime - currentDateTime;
+
+            await StartCountDown(timeDifference);
+        }
     }
 
     async Task StartCountDown(TimeSpan timeDifference)
@@ -49,27 +68,18 @@ public class Timer : MonoBehaviour
 
             int totalSeconds = (int)timeDifference.TotalSeconds; 
 
-            int hours = totalHours > 23 ? (totalHours % 24) : totalHours;
+            int hours = totalHours >= 24 ? (totalHours % 24) : totalHours;
 
             int minutes = totalMinutes > 60 ? (totalMinutes % 60) : totalMinutes;
 
             int seconds = totalSeconds > 60 ? (totalSeconds % 60) : totalSeconds;
 
-            // timer.text = $"Days: {days} \n Hours: {hours} \n Minutes: {minutes} \n Seconds {seconds}";
             daysNum.text = days.ToString();
             hoursNum.text = hours.ToString();
             minutesNum.text = minutes.ToString();
             secondsNum.text = seconds.ToString();
         }
     }
-
-    // void UpdateTimer(int seconds)
-    // {
-    //     int minutes = seconds / 60;
-    //     int remainingSeconds = seconds % 60;
-
-    //     timer.text = $"{minutes}:{seconds}";
-    // }
 
     DateTime GetNextSunday(DateTime currentDateTime)
     {
