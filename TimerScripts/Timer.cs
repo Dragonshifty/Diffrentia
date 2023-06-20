@@ -16,6 +16,9 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI minutesText;
     public TextMeshProUGUI secondsNum;
 
+    private bool hasExpired;
+    private bool hasBeenSet;
+
 
     private void Awake() 
     {
@@ -23,12 +26,13 @@ public class Timer : MonoBehaviour
     }
     private async void Start() 
     {
+
+
         DateTime currentDateTime = DateTime.Now;
 
         if (currentDateTime.DayOfWeek == DayOfWeek.Sunday)
         {
-            DateTime nextSunday = GetNextSunday(currentDateTime);
-            DateTime targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
+            DateTime targetDateTime = new DateTime(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day, 18, 0, 0);
 
             TimeSpan timeDifference = targetDateTime - currentDateTime;
 

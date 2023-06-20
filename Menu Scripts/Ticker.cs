@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 
@@ -9,7 +10,8 @@ public class Ticker : MonoBehaviour
     private RectTransform textScroll;
     private bool canScroll;
     private TextMeshProUGUI tickerScroll;
-    private BattleInfo battleInfo;
+    // private BattleInfo battleInfo;
+    // private Dictionary<string, int> clanPoints;
 
     void Awake()
     {
@@ -32,10 +34,22 @@ public class Ticker : MonoBehaviour
         
     }
 
+
     public void StartScrolling(BattleInfo battleInfo)
     {
-        this.battleInfo = battleInfo;
-        tickerScroll.text = $"{battleInfo.CurrentLeader} is in the lead with {battleInfo.LeaderPoints.ToString()} points. Your Clan {battleInfo.PlayerClan} has {battleInfo.PlayerPoints.ToString()} points.";
+        ProcessPoints processPoints = new ProcessPoints();
+        string messageText = processPoints.Process(battleInfo);
+        // tickerScroll.text = $"{battleInfo.CurrentLeader} is in the lead with {battleInfo.LeaderPoints.ToString()} points. Your Clan {battleInfo.PlayerClan} has {battleInfo.PlayerPoints.ToString()} points.";
+
+        tickerScroll.enableAutoSizing = true;
+        tickerScroll.enableWordWrapping = false;
+
+        if (messageText != null)
+        {
+            tickerScroll.text = messageText;
+        }
         canScroll = true;
+        processPoints = null;
+        battleInfo = null;
     }
 }
