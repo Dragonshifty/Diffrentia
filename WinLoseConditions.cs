@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class WinLoseConditions : MonoBehaviour
@@ -25,9 +26,15 @@ public class WinLoseConditions : MonoBehaviour
     [SerializeField] TextMeshProUGUI compyScore;
     [SerializeField] TextMeshProUGUI winLoseOrDrawText;
     [SerializeField] TextMeshProUGUI conditionsMessage;
-    // List<TextMeshProUGUI> pointsTextList;
-
-    // ScoreDataTransfer scoreDataTransfer;
+    
+    [SerializeField] Image foxImage;
+    [SerializeField] Image catImage;
+    [SerializeField] Image dragonImage;
+    [SerializeField] Image falconImage;
+    [SerializeField] Sprite foxSprite;
+    [SerializeField] Sprite catSprite;
+    [SerializeField] Sprite dragonSprite;
+    [SerializeField] Sprite falconSprite;
 
     public enum WinLossType
     {
@@ -44,10 +51,7 @@ public class WinLoseConditions : MonoBehaviour
 
     private void Start() 
     {
-        // pointsTextList.Add(falconPoints);
-        // pointsTextList.Add(foxPoints);
-        // pointsTextList.Add(catPoints);
-        // pointsTextList.Add(dragonPoints);
+
 
         drawMessages.Add("Alright, let's call it a draw");
         drawMessages.Add("A draw! Yay. Well done, you.");
@@ -76,7 +80,7 @@ public class WinLoseConditions : MonoBehaviour
         veryCloseLoss.Add("Harsh.");
 
         closeLoss.Add("That was almost close.");
-        closeLoss.Add("Could have gone either way. Kinda.");
+        closeLoss.Add("Could have gone either way.");
 
         bigLoss.Add("That could have gone better.");
         bigLoss.Add("I suspect foul play.");
@@ -204,10 +208,21 @@ public class WinLoseConditions : MonoBehaviour
         string[] recieveInfo = CheckWinLoseConditions(player, compy);
 
         clan = ScoreDataTransfer.Instance.clan;
-        falconPoints.text = ScoreDataTransfer.Instance.FalconScore.ToString();
-        catPoints.text = ScoreDataTransfer.Instance.CatScore.ToString();
-        foxPoints.text = ScoreDataTransfer.Instance.FoxScore.ToString();
-        dragonPoints.text = ScoreDataTransfer.Instance.DragonScore.ToString();
+
+        int falconTotal = ScoreDataTransfer.Instance.FalconScore;
+        int catTotal = ScoreDataTransfer.Instance.CatScore;
+        int foxTotal = ScoreDataTransfer.Instance.FoxScore;
+        int dragonTotal = ScoreDataTransfer.Instance.DragonScore;
+
+        string falconTotalString = falconTotal < 1000 ? falconTotal.ToString() : NumberFormat(falconTotal);
+        string catTotalString = catTotal < 1000 ? catTotal.ToString() : NumberFormat(catTotal);
+        string foxTotalString = foxTotal < 1000 ? foxTotal.ToString() : NumberFormat(foxTotal);
+        string dragonTotalString = dragonTotal < 1000 ? dragonTotal.ToString() : NumberFormat(dragonTotal);
+
+        falconPoints.text = falconTotalString;
+        catPoints.text = catTotalString;
+        foxPoints.text = foxTotalString;
+        dragonPoints.text = dragonTotalString;
 
         playerScore.text = player.ToString();
         compyScore.text = compy.ToString();
@@ -218,6 +233,24 @@ public class WinLoseConditions : MonoBehaviour
         winLoseOrDrawText.text = recieveInfo[1];
     }
 
+    string NumberFormat(int number)
+    {
+        string suffix = "";
+        float div = 1f;
+        
+        if (number >= 1000000)
+        {
+            suffix = "M";
+            div = 1000000f;
+        } else if (number >= 1000)
+        {
+            suffix = "K";
+            div = 1000f;
+        }
+        float smaller = number / div;
+        return $"{smaller:F2}{suffix}";
+    }
+
     void PointsColour()
     {
         // Debug.Log(clan);
@@ -225,15 +258,19 @@ public class WinLoseConditions : MonoBehaviour
         {
             case "Cat":
                 catPoints.color = new Color32(202, 39, 37, 255);
+                catImage.sprite = catSprite;
                 break;
             case "Dragon":
                 dragonPoints.color = new Color32(202, 39, 37, 255);
+                dragonImage.sprite = dragonSprite;
                 break;
             case "Fox":
                 foxPoints.color = new Color32(202, 39, 37, 255);
+                foxImage.sprite = foxSprite;
                 break;
             case "Falcon":
                 falconPoints.color = new Color32(202, 39, 37, 255);
+                falconImage.sprite = falconSprite;
                 break;
         }
     }

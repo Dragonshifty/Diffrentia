@@ -9,6 +9,15 @@ public class MainGame : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI cardsRemainingText;
     [SerializeField] Image quadRemaning;
+    [SerializeField] Image foxImage;
+    [SerializeField] Image catImage;
+    [SerializeField] Image dragonImage;
+    [SerializeField] Image falconImage;
+    [SerializeField] Sprite foxSprite;
+    [SerializeField] Sprite catSprite;
+    [SerializeField] Sprite dragonSprite;
+    [SerializeField] Sprite falconSprite;
+
     public static MainGame Instance { get; private set; }
     List<GameObject> deck = new List<GameObject>();
     List<GameObject> playerHand = new List<GameObject>();
@@ -47,6 +56,7 @@ public class MainGame : MonoBehaviour
         sceneStuffs = FindObjectOfType<SceneStuffs>();
         coinTossHandler = FindObjectOfType<CoinTossHandler>();
         clan = ScoreDataTransfer.Instance.clan;
+        ChangeSmallClanImage();
     }
     
     void Start()
@@ -428,6 +438,25 @@ public class MainGame : MonoBehaviour
     {
         float fillLevel = (float)deck.Count / 42f;
         quadRemaning.fillAmount = fillLevel;
+    }
+
+    void ChangeSmallClanImage()
+    {
+        switch (clan)
+        {
+            case "Fox":
+                foxImage.sprite = foxSprite;
+                break;
+            case "Cat":
+                catImage.sprite = catSprite;
+                break;
+            case "Dragon":
+                dragonImage.sprite = dragonSprite;
+                break;
+            case "Falcon":
+                falconImage.sprite = falconSprite;
+                break;     
+        }
     }
 
 }

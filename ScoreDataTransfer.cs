@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ScoreDataTransfer : MonoBehaviour
@@ -12,6 +13,8 @@ public class ScoreDataTransfer : MonoBehaviour
     private int catScore;
     private int dragonScore;
     private int falconScore;
+    private string winner;
+    private List<KeyValuePair<string, int>> winList;
     private int winAmount = 10;
     public string clan = "";
 
@@ -64,6 +67,18 @@ public class ScoreDataTransfer : MonoBehaviour
         get { return falconScore; }
         set { falconScore = value; }
     }
+
+    public string Winner
+    {
+        get { return winner; }
+        set { winner = value; }
+    }
+
+    public List<KeyValuePair<string, int>> WinList
+    {
+        get {return winList;}
+    }
+
 
     public void UpdatePlayerPrefs()
     {
@@ -178,8 +193,6 @@ public class ScoreDataTransfer : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    
-
     public void ClearPlayerPrefs()
     {
         try 
@@ -189,6 +202,8 @@ public class ScoreDataTransfer : MonoBehaviour
             PlayerPrefs.SetInt("DragonScore", 0);
             PlayerPrefs.SetInt("FalconScore", 0);
             PlayerPrefs.SetInt("ClanChosen", 0);
+            PlayerPrefs.SetInt("TimerSet", 0);
+            PlayerPrefs.SetString("Winner", "No Winners");
             PlayerPrefs.Save();
         } catch (PlayerPrefsException ex)
         {
@@ -202,6 +217,86 @@ public class ScoreDataTransfer : MonoBehaviour
         PlayerPrefs.SetInt("ClanChosen", 1);
         clan = clanChoice;
         PlayerPrefs.Save();
+    }
+
+    public void GetWeeksWinner()
+    {
+        // string winner = "";
+        string place = "";
+        bool noScore = false;
+        bool allDraw = false;
+
+        Dictionary<string, int> clanPoints = new Dictionary<string, int>
+                {
+                    {"Fox", foxScore},
+                    {"Cat", catScore},
+                    {"Dragon", dragonScore},
+                    {"Falcon", falconScore}
+                };
+
+        List<KeyValuePair<string, int>> sortedPointsList = clanPoints.OrderByDescending(pair => pair.Value).ToList();
+
+        winList = sortedPointsList;
+
+        int[] pointsValues = new int[]
+        {
+            sortedPointsList[0].Value,
+            sortedPointsList[1].Value,
+            sortedPointsList[2].Value,
+            sortedPointsList[3].Value
+        };
+
+        string[] clanNames = new string[]
+        {
+            sortedPointsList[0].Key,
+            sortedPointsList[1].Key,
+            sortedPointsList[2].Key,
+            sortedPointsList[3].Key
+        };
+
+        if (clanNames[0].Equals(clan)) place = "First";
+        if (clanNames[1].Equals(clan)) place = "Second";
+        if (clanNames[2].Equals(clan)) place = "Third";
+        if (clanNames[3].Equals(clan)) place = "Fourth";
+
+        noScore = pointsValues.All(x => x == 0);
+        allDraw = pointsValues.All(x => x == pointsValues[0]);
+
+        if (noScore)
+        {
+            winner = "No Winners";
+        }
+
+        if (!noScore && allDraw)
+        {
+            winner = clan;
+        }
+
+        if (pointsValues[0] == pointsValues[1])
+        {
+            if (pointsValues[1] == pointsValues[2])
+            {
+                if (place.Equals("First") || place.Equals("Second") || place.Equals("Third"))
+                {
+                    winner = clan;
+                }
+            } else if (place.Equals("First") || place.Equals("Second"))
+            {
+                winner = clan;
+            }
+        } else 
+        {
+            winner = clanNames[0];
+        }
+
+        try 
+        {
+            PlayerPrefs.SetInt("TimerSet", 0);
+            PlayerPrefs.SetString("Winner", winner);
+        } catch (PlayerPrefsException ex)
+        {
+            Debug.LogError("Error PlayerPrefs: " + ex.Message);
+        }
     }
 
 }
