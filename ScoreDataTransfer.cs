@@ -14,6 +14,7 @@ public class ScoreDataTransfer : MonoBehaviour
     private int dragonScore;
     private int falconScore;
     private string winner;
+    private int winningScore;
     private List<KeyValuePair<string, int>> winList;
     private int winAmount = 10;
     public string clan = "";
@@ -72,6 +73,11 @@ public class ScoreDataTransfer : MonoBehaviour
     {
         get { return winner; }
         set { winner = value; }
+    }
+
+    public int WinningScore
+    {
+        get { return winningScore; }
     }
 
     public List<KeyValuePair<string, int>> WinList
@@ -211,6 +217,23 @@ public class ScoreDataTransfer : MonoBehaviour
         }
     }
 
+    public void ClearWeek()
+    {
+        try 
+        {
+            PlayerPrefs.SetInt("FoxScore", 0);
+            PlayerPrefs.SetInt("CatScore", 0);
+            PlayerPrefs.SetInt("DragonScore", 0);
+            PlayerPrefs.SetInt("FalconScore", 0);
+            PlayerPrefs.SetInt("TimerSet", 0);
+            PlayerPrefs.SetString("Winner", "No Winners");
+            PlayerPrefs.Save();
+        } catch (PlayerPrefsException ex)
+        {
+            Debug.LogError("Error PlayerPrefs: " + ex.Message);
+        }
+    }
+
     public void SetClan(string clanChoice)
     {
         PlayerPrefs.SetString("Clan", clanChoice);
@@ -223,8 +246,6 @@ public class ScoreDataTransfer : MonoBehaviour
     {
         // string winner = "";
         string place = "";
-        bool noScore = false;
-        bool allDraw = false;
 
         Dictionary<string, int> clanPoints = new Dictionary<string, int>
                 {
@@ -259,8 +280,9 @@ public class ScoreDataTransfer : MonoBehaviour
         if (clanNames[2].Equals(clan)) place = "Third";
         if (clanNames[3].Equals(clan)) place = "Fourth";
 
-        noScore = pointsValues.All(x => x == 0);
-        allDraw = pointsValues.All(x => x == pointsValues[0]);
+        winningScore =  pointsValues[0];
+        bool noScore = pointsValues.All(x => x == 0);
+        bool allDraw = pointsValues.All(x => x == pointsValues[0]);
 
         if (noScore)
         {

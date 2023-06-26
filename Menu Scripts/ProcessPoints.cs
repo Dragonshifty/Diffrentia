@@ -26,6 +26,7 @@ public class ProcessPoints
     int loserDifference;
     string place = "";
 
+
     public string Process(BattleInfo battleInfo)
     {
         this.battleInfo = battleInfo;
@@ -132,14 +133,17 @@ public class ProcessPoints
                 } else
                 {
                     leaderCase = 1;
+                    // All tied and > 0
                 }
             } else
             {
                 leaderCase = 8;
+                // All different scores
             }
         } else
         {
             leaderCase = 0;
+            // no score
         }
     }
 
@@ -159,26 +163,26 @@ public class ProcessPoints
                     messageStream += $"Three clans share the lead with {pointsValues[0]}. Your clan, {clan}, are trailing a little bit with {pointsValues[3]} points.";
                 } else
                 {
-                    messageStream += $"Your clan, {clan}, shares the lead with {pointsValues[0]} points, with only {clanNames[3]} on their own in last.";
+                    messageStream += $"Three clamber for the lead and all share {pointsValues[0]} points! You're amongst them - {clan} - so elbows out! Only {clanNames[3]} is on their own in last.";
                 }
-                
                 break;
             case 3:
                 if (place.Equals("First") || place.Equals("Second"))
                 {
-                    messageStream += $"Your clan, {clan}, is tied for the lead with {pointsValues[0]} points.";
+                    string tempTwoTiedClan = place.Equals("First") ? clanNames[1] : clanNames[0];
+                    messageStream += $"Epically close-fought battle at the front as {tempTwoTiedClan} and you, Clan {clan}, share the lead with {pointsValues[0]} points.";
                 } else
                 {
-                    messageStream += $"{clanNames[0]} and {clanNames[1]} are both tied and leading by {secondToThird} points.";
+                    messageStream += $"{clanNames[0]} and {clanNames[1]} are both tied and leading by {secondToThird} points. I think they're working together.";
                 }
                 break;
             case 4:
                 if (place.Equals("First"))
                 { 
-                    messageStream += $"{leader} is in the lead with {pointsValues[0]} points.";
+                    messageStream += $"You're in the lead with {pointsValues[0]} points! Am I supposed to be unbiased? Oh well, go, Clan {clan}!";
                 } else if (place.Equals("Second"))
                 {
-                    messageStream += $"Your clan, {clan}, are currently runners-up and trailing {clanNames[0]} by {leaderDifference} points.";
+                    messageStream += $"Your clan, {clan}, are currently runners-up and trailing {clanNames[0]} by {leaderDifference} points. Let's push.";
                 } else if (place.Equals("Third"))
                 {
                     messageStream += $"Your clan, {clan}, are in third with {pointsValues[2]} points - {secondToThird} points behind clan {clanNames[1]}, who are behind {clanNames[0]}.";
@@ -186,7 +190,7 @@ public class ProcessPoints
                 {
                     if (pointsValues[3] == 0)
                     {
-                        messageStream += $"Your clan, {clan}, is yet to score. Still, early days (probably).";
+                        messageStream += $"Your clan, {clan}, is yet to score. Still, early days.";
                     } else
                     {
                         messageStream += $"Your clan, {clan}, is valiantly bringing up the rear with {pointsValues[3]}.";
@@ -194,12 +198,28 @@ public class ProcessPoints
                 }
                 break;
             case 8:
-                string losing = pointsValues[3] == 0 ? $" {clanNames[3]} is yet to score." : $" {clanNames[3]} is trailing by {loserDifference} points.";
-                
-                messageStream += $"{leader} is leading by {leaderDifference} points. {clanNames[1]} has {pointsValues[1]} points and {clanNames[2]} is coming in third with {pointsValues[2]} points." + losing;
+                if (place.Equals("First"))
+                {
+                    messageStream += $"{GetLeadComments()} your own Clan {clan} leads by {leaderDifference} and with {pointsValues[0]} points. {clanNames[1]} is second ({pointsValues[1]}), {clanNames[2]} third ({pointsValues[2]}), and {clanNames[3]} coming in last ({pointsValues[3]}).";
+                }
+                if (place.Equals("Second"))
+                {
+                    messageStream += $"You're chasing {clanNames[0]} for first by {leaderDifference} for Clan {clan} with {pointsValues[0]} and {pointsValues[1]} points, respectively. {clanNames[2]} is in third for {pointsValues[2]} points, with {clanNames[3]} last with {pointsValues[3]} points.";
+                }
+                if (place.Equals("Third"))
+                {
+                    messageStream += $"We have {clanNames[0]} in first with {pointsValues[0]} points and {clanNames[1]} with {pointsValues[1]}. You're representing Clan {clan} in third with {pointsValues[2]} points, and leading {clanNames[3]} by {loserDifference}.";
+                }
+
+                string losing = pointsValues[3] == 0 ? $" Unfortunately you're yet to score with Clan {clan}. Early days!" : $" Your clan, {clan} is trailing by {loserDifference} points. Let's push.";
+
+                if (place.Equals("Fourth"))
+                {
+                    messageStream += $"{leader} is leading by {leaderDifference} points. {clanNames[1]} has {pointsValues[1]} points and {clanNames[2]} is coming in third with {pointsValues[2]} points." + losing;
+                } 
                 break;
             default:
-                messageStream += "I obviously missed something if you're reading this";
+                messageStream += "I obviously missed something if you're reading this.";
                 break;
         }
     }
@@ -229,5 +249,86 @@ public class ProcessPoints
                 }
                 break;
         }
+    }
+
+
+    string GetLeadComments()
+    {
+        int choice = Random.Range(0, 4);
+        if (leaderDifference < 8)
+        {
+            switch (choice)
+            {
+                case 0:
+                    return "By a whisker ";
+                case 1:
+                    return "By the narrowest of margains ";
+                case 2:
+                    return "Don't blink but ";
+                case 3:
+                    return "I mean, only just, but ";
+            }
+        }
+
+        if (leaderDifference > 7 && leaderDifference < 20)
+        {
+            switch (choice)
+            {
+                case 0:
+                    return "Edging into the lead, ";
+                case 1:
+                    return "Starting to get comfortable, ";
+                case 2:
+                    return "Not to get complacent but ";
+                case 3:
+                    return "Looking hopeful as ";
+            }
+        }
+
+        if (leaderDifference > 19 && leaderDifference < 40)
+        {
+            switch (choice)
+            {
+                case 0:
+                    return "Starting to get into their stride, ";
+                case 1:
+                    return "A slightly more convinving lead as ";
+                case 2:
+                    return "No resting on laurels but ";
+                case 3:
+                    return "A confident lead as ";
+            }
+        }
+
+        if (leaderDifference > 39 && leaderDifference < 80)
+        {
+            switch (choice)
+            {
+                case 0:
+                    return "A commanding lead as ";
+                case 1:
+                    return "Is there time to relax as ";
+                case 2:
+                    return "Pulling away from the pack as ";
+                case 3:
+                    return "Leaping ahead as ";
+            }
+        }
+
+        if (leaderDifference > 79)
+        {
+            switch (choice)
+            {
+                case 0:
+                    return "Way, way out in the lead as ";
+                case 1:
+                    return "Can anyone catch them as ";
+                case 2:
+                    return "Off in the dinstance as ";
+                case 3:
+                    return "Sit back and relax as ";
+            }
+        }
+        return "";
     }
 }

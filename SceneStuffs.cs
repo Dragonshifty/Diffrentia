@@ -47,6 +47,11 @@ public class SceneStuffs : MonoBehaviour
         StartCoroutine(FadeOut(3));
     }
 
+    public void LoadWeekwinner()
+    {
+        StartCoroutine(FadeOut(5));
+    }
+
     public void LoadWinConditions()
     {
         ScoreDataTransfer.Instance.PlayerScore = ScoreMaster.Instance.PlayerScore;
@@ -95,6 +100,9 @@ public class SceneStuffs : MonoBehaviour
             case 4:
                 SceneManager.LoadScene(4);
                 break;
+            case 5:
+                SceneManager.LoadScene(5);
+                break;
         }
     }
 
@@ -116,5 +124,10 @@ public class SceneStuffs : MonoBehaviour
 
         // isFading = false;
         blackScreen.gameObject.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

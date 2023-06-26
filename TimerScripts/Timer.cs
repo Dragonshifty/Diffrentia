@@ -19,40 +19,79 @@ public class Timer : MonoBehaviour
     private bool hasExpired;
     private bool hasBeenSet;
 
+    SceneStuffs sceneStuffs;
+
+    
+
+    private DateTime targetDateTime;
 
     private void Awake() 
     {
-            
+        sceneStuffs = FindObjectOfType<SceneStuffs>();
     }
     private async void Start() 
     {
-
-
         DateTime currentDateTime = DateTime.Now;
 
-        if (currentDateTime.DayOfWeek == DayOfWeek.Sunday)
+        if (PlayerPrefs.GetInt("TimerSet") == 1)
         {
-            DateTime targetDateTime = new DateTime(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day, 18, 0, 0);
+            string retrievedDate = PlayerPrefs.GetString("TargetDateTime");
+            targetDateTime = DateTime.ParseExact(retrievedDate, "yyyy-MM-dd HH:mm:ss", null);
 
             TimeSpan timeDifference = targetDateTime - currentDateTime;
 
-            if (timeDifference.TotalSeconds > 0)
+            if (timeDifference.Seconds < 0)
+            {
+                ScoreDataTransfer.Instance.GetWeeksWinner();
+                sceneStuffs.LoadWeekwinner();
+            } else
             {
                 await StartCountDown(timeDifference);
             }
-            else
-            {
-                //
-            }
-        }
-        else
+            
+        } else 
         {
-            DateTime nextSunday = GetNextSunday(currentDateTime);
-            DateTime targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
+            if (currentDateTime.DayOfWeek == DayOfWeek.Sunday)
+            {
+                DateTime targetTemp = new DateTime(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day, 18, 0, 0);
 
-            TimeSpan timeDifference = targetDateTime - currentDateTime;
+                TimeSpan timeDifference = targetTemp - currentDateTime;
 
-            await StartCountDown(timeDifference);
+                if (timeDifference.TotalSeconds > 0)
+                {
+                    targetDateTime = targetTemp;
+                    string formattedDateTime = targetDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    PlayerPrefs.SetString("TargetDateTime", formattedDateTime);
+                    PlayerPrefs.SetInt("TimerSet", 1);
+                    PlayerPrefs.Save();
+                    await StartCountDown(timeDifference);
+                } else
+                {
+                    DateTime nextSunday = GetNextSunday(currentDateTime);
+                    targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
+                    targetDateTime = targetDateTime.AddDays(7);
+                    TimeSpan timeDifference2 = targetDateTime - currentDateTime;
+
+                    string formattedDateTime = targetDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    PlayerPrefs.SetString("TargetDateTime", formattedDateTime);
+                    PlayerPrefs.SetInt("TimerSet", 1);
+                    PlayerPrefs.Save();
+
+                    await StartCountDown(timeDifference2);
+                }
+            } else
+            {
+                DateTime nextSunday = GetNextSunday(currentDateTime);
+                targetDateTime = new DateTime(nextSunday.Year, nextSunday.Month, nextSunday.Day, 18, 0, 0);
+                TimeSpan timeDifference2 = targetDateTime - currentDateTime;
+
+                string formattedDateTime = targetDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                PlayerPrefs.SetString("TargetDateTime", formattedDateTime);
+                PlayerPrefs.SetInt("TimerSet", 1);
+                PlayerPrefs.Save();
+
+                await StartCountDown(timeDifference2); 
+            }
         }
     }
 

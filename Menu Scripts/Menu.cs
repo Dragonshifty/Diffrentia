@@ -21,6 +21,7 @@ public class Menu : MonoBehaviour
     Ticker ticker;
     BattleInfo battleInfo;
     SceneStuffs sceneStuffs;
+
     
 
     private void Awake() 
@@ -59,6 +60,7 @@ public class Menu : MonoBehaviour
                 PlayerPrefs.SetInt("DragonScore", 0);
                 PlayerPrefs.SetInt("FalconScore", 0);
                 PlayerPrefs.SetInt("ClanChosen", 0);
+                PlayerPrefs.SetInt("TimerSet", 0);
                 PlayerPrefs.Save();
             } else
             {
