@@ -6,7 +6,7 @@ using TMPro;
 
 public class WinnersHandler : MonoBehaviour
 {
-    [SerializeField] Sprite centreLogo;
+    [SerializeField] Image centreLogo;
     [SerializeField] Sprite foxSprite;
     [SerializeField] Sprite catSprite;
     [SerializeField] Sprite dragonSprite;
@@ -34,19 +34,19 @@ public class WinnersHandler : MonoBehaviour
             switch (winner)
             {
                 case "Fox":
-                    centreLogo = foxSprite;
+                    centreLogo.sprite = foxSprite;
                     winnersText.text = "Fox WINS";
                     break;
                 case "Cat":
-                    centreLogo = catSprite;
+                    centreLogo.sprite = catSprite;
                     winnersText.text = "Cat WINS";
                     break;
                 case "Dragon":
-                    centreLogo = dragonSprite;
+                    centreLogo.sprite = dragonSprite;
                     winnersText.text = "Dragon WINS";
                     break;
                 case "Falcon":
-                    centreLogo = falconSprite;
+                    centreLogo.sprite = falconSprite;
                     winnersText.text = "Falcon WINS";
                     break;
             }

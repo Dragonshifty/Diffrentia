@@ -21,7 +21,7 @@ public class Menu : MonoBehaviour
     Ticker ticker;
     BattleInfo battleInfo;
     SceneStuffs sceneStuffs;
-
+    ConfirmCancel confirmCancel;
     
 
     private void Awake() 

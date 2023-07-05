@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Shimmer : MonoBehaviour
 {
@@ -9,13 +10,21 @@ public class Shimmer : MonoBehaviour
     public float shimmerSpeed = 2f;
     public float shimmerRange = 0.2f;
 
+    public float delayBetweenCharacters = 0.1f;
+
     private float time;
 
+    void Start()
+    {
+        
+    }
+        
     void Update()
     {
         time += Time.deltaTime;
         float shimmer = Mathf.PingPong(time * shimmerSpeed, shimmerRange);
-        Color shimmerColor = new Color(1f, 1f, 1f, 1f - shimmer);
+        Color shimmerColor = new Color(0f, 0f, 0f, 1f - shimmer);
         textMeshPro.color = shimmerColor;
+        
     }
 }

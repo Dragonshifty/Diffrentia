@@ -10,13 +10,21 @@ public class Ticker : MonoBehaviour
     private RectTransform textScroll;
     private bool canScroll;
     private TextMeshProUGUI tickerScroll;
-    // private BattleInfo battleInfo;
-    // private Dictionary<string, int> clanPoints;
+
+    // float delay = 0.04f;
+
+    // private string originalMessage;
+    // private string currentText;
+    // private float timer;
 
     void Awake()
     {
         textScroll = GetComponent<RectTransform>();
         tickerScroll = GetComponent<TextMeshProUGUI>();
+
+        
+        // currentText = "";
+        // timer = 0f;
     }
 
     
@@ -28,8 +36,20 @@ public class Ticker : MonoBehaviour
 
             if (textScroll.anchoredPosition.x < -textScroll.rect.width)
             {
-                textScroll.anchoredPosition = new Vector2(Screen.width, textScroll.anchoredPosition.y);
-            }  
+                // textScroll.anchoredPosition = new Vector2(Screen.width, textScroll.anchoredPosition.y);
+                Destroy(gameObject);
+            } 
+
+        //     if (currentText.Length < originalMessage.Length)
+        // {
+        //     timer += Time.deltaTime;
+        //     if (timer >= delay)
+        //     {
+        //         timer = 0f;
+        //         currentText = originalMessage.Substring(0, currentText.Length + 1);
+        //         tickerScroll.text = currentText;
+        //     }
+        // } 
         }
         
     }
@@ -39,7 +59,6 @@ public class Ticker : MonoBehaviour
     {
         ProcessPoints processPoints = new ProcessPoints();
         string messageText = processPoints.Process(battleInfo);
-        // tickerScroll.text = $"{battleInfo.CurrentLeader} is in the lead with {battleInfo.LeaderPoints.ToString()} points. Your Clan {battleInfo.PlayerClan} has {battleInfo.PlayerPoints.ToString()} points.";
 
         tickerScroll.enableAutoSizing = true;
         tickerScroll.enableWordWrapping = false;
@@ -47,6 +66,7 @@ public class Ticker : MonoBehaviour
         if (messageText != null)
         {
             tickerScroll.text = messageText;
+            // originalMessage = tickerScroll.text;
         }
         canScroll = true;
         processPoints = null;

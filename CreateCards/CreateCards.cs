@@ -118,57 +118,10 @@ public class CreateCards : MonoBehaviour
         }
     }
 
-    // void SetCompyHand()
-    // {
-    //     for (int i = 0; i < 5; i++)
-    //     {
-    //         compyHand.Add(deck[0]);
-    //         deck.RemoveAt(0);
-    //     }
-    // }
-
-    // void SortPlayerHand()
-    // {
-
-    //     playerHand.Sort((card1, card2) =>
-    //     {
-    //         int cardValue1 = card1.GetComponent<ObjectDetails>().CardValue;
-    //         int cardValue2 = card2.GetComponent<ObjectDetails>().CardValue;
-    //         return cardValue1.CompareTo(cardValue2);
-    //     });
-    //     foreach (GameObject card in playerHand)
-    //     {
-    //         ObjectDetails cardDetails = card.GetComponent<ObjectDetails>();
-    //         Debug.Log(cardDetails.CardValue);
-    //     }
-    // }
-
-    // private int CompareCardValues(GameObject card1, GameObject card2)
-    // {
-    //     ObjectDetails details1 = card1.GetComponent<ObjectDetails>();
-    //     ObjectDetails details2 = card2.GetComponent<ObjectDetails>();
-
-    //     if (details1.CardValue < details2.CardValue)
-    //     {
-    //         return -1;
-    //     }
-    //     else if (details1.CardValue > details2.CardValue)
-    //     {
-    //         return 1;
-    //     }
-    //     else
-    //     {
-    //         return 0;
-    //     }
-    // }
-
     public void ShowTop()
     {
         deck[0].SetActive(true);
     }
 
-    // public void Shift()
-    // {
-    //     moveCards.DealCardOne(deck[0]);
-    // }
+
 }

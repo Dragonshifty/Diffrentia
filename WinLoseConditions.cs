@@ -257,19 +257,19 @@ public class WinLoseConditions : MonoBehaviour
         switch (clan)
         {
             case "Cat":
-                catPoints.color = new Color32(202, 39, 37, 255);
+                catPoints.color = new Color32(255, 255, 255, 255);
                 catImage.sprite = catSprite;
                 break;
             case "Dragon":
-                dragonPoints.color = new Color32(202, 39, 37, 255);
+                dragonPoints.color = new Color32(255, 255, 255, 255);
                 dragonImage.sprite = dragonSprite;
                 break;
             case "Fox":
-                foxPoints.color = new Color32(202, 39, 37, 255);
+                foxPoints.color = new Color32(255, 255, 255, 255);
                 foxImage.sprite = foxSprite;
                 break;
             case "Falcon":
-                falconPoints.color = new Color32(202, 39, 37, 255);
+                falconPoints.color = new Color32(255, 255, 255, 255);
                 falconImage.sprite = falconSprite;
                 break;
         }

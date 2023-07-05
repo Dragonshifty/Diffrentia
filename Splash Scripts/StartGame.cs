@@ -23,7 +23,7 @@ public class StartGame : MonoBehaviour
     
     IEnumerator AllowBegin()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         colliderScreen.enabled = true;
     }
 
