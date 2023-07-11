@@ -51,8 +51,6 @@ public class WinLoseConditions : MonoBehaviour
 
     private void Start() 
     {
-
-
         drawMessages.Add("Alright, let's call it a draw");
         drawMessages.Add("A draw! Yay. Well done, you.");
 
@@ -62,17 +60,19 @@ public class WinLoseConditions : MonoBehaviour
         veryCloseWin.Add("I probably shouldn't have bet against you there.");
 
         closeWin.Add("Nicely done.");
-        closeWin.Add("Convincing win.");
-        closeWin.Add("Actual skill or just lucky? We may never know.");
+        closeWin.Add("Edge of your seat type stuff there.");
+        closeWin.Add("I was rooting for you the whole time. Honest.");
         closeWin.Add("This is promising.");
 
         generalWin.Add("Very convincing win.");
         generalWin.Add("That'll do it.");
         generalWin.Add("Things are looking up.");
+        generalWin.Add("Like a leaf on the wind.");
 
         bigWin.Add("Outstanding!");
         bigWin.Add("Go, you!");
         bigWin.Add("Now do it again!");
+        bigWin.Add("And there was much whooping.");
 
         veryCloseLoss.Add("That's a bad miss.");
         veryCloseLoss.Add("So, so close!");

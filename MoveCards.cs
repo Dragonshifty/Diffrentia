@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveCards : MonoBehaviour
 {
-    // [SerializeField] float rotateSpeed = 100f;
     [SerializeField] float rotationAngle = 180f;
     Quaternion initialRotation;
     Quaternion desiredRotation;
@@ -23,9 +22,6 @@ public class MoveCards : MonoBehaviour
         deckAndPileWaypoints = waypointsSO.GetDeckAndPileWaypoints();
 
         soundHandler = FindObjectOfType<SoundHandler>();
-
-        // initialRotation = transform.rotation;
-        // desiredRotation = initialRotation * Quaternion.AngleAxis(rotationAngle, Vector3.up);
     }
 
     public void DistributeCards(List<GameObject> cards, bool isPlayer)

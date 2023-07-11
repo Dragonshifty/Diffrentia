@@ -13,11 +13,6 @@ public class Shimmer : MonoBehaviour
     public float delayBetweenCharacters = 0.1f;
 
     private float time;
-
-    void Start()
-    {
-        
-    }
         
     void Update()
     {
@@ -25,6 +20,5 @@ public class Shimmer : MonoBehaviour
         float shimmer = Mathf.PingPong(time * shimmerSpeed, shimmerRange);
         Color shimmerColor = new Color(0f, 0f, 0f, 1f - shimmer);
         textMeshPro.color = shimmerColor;
-        
     }
 }

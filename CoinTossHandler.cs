@@ -17,7 +17,6 @@ public class CoinTossHandler : MonoBehaviour
         coinTossText = coinTossObject.GetComponentInChildren<TextMeshProUGUI>();
         fadeIn = fadeTotalTime;
         fadeOut = fadeOutTime;
-        // coinTossObject.gameObject.SetActive(false);
     }
 
     void Update()

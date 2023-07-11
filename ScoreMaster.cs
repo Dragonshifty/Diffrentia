@@ -58,13 +58,6 @@ public class ScoreMaster : MonoBehaviour
         
     }
 
-    private void Start() 
-    {
-        // UpdatePlayerPrefs(); 
-    }
-
-
-
     public int PlayerScore
     {
         get {return playerScore; }
@@ -130,41 +123,6 @@ public class ScoreMaster : MonoBehaviour
         }
     }
 
-    // public void UpdatePlayerPrefs()
-    // {
-    //     bool exists = PlayerPrefs.HasKey("FoxScore");
-
-    //     if (!exists)
-    //     {
-    //         PlayerPrefs.SetInt("FoxScore", houseFoxScore);
-    //         PlayerPrefs.SetInt("CatScore", houseCatScore);
-    //         PlayerPrefs.SetInt("DragonScore", houseDragonScore);
-    //         PlayerPrefs.SetInt("OwlScore", houseFalconScore);
-    //     } else 
-    //     {
-    //         int tempFox = PlayerPrefs.GetInt("FoxScore");
-    //         int tempCat = PlayerPrefs.GetInt("CatScore");
-    //         int tempDragon = PlayerPrefs.GetInt("DragonScore");
-    //         int tempOwl = PlayerPrefs.GetInt("OwlScore");
-
-    //         tempFox += houseFoxScore;
-    //         tempCat += houseCatScore;
-    //         tempDragon += houseDragonScore;
-    //         tempOwl += houseFalconScore;
-
-    //         PlayerPrefs.SetInt("FoxScore", tempFox);
-    //         PlayerPrefs.SetInt("CatScore", tempCat);
-    //         PlayerPrefs.SetInt("DragonScore", tempDragon);
-    //         PlayerPrefs.SetInt("OwlScore", tempOwl);
-
-    //         houseFoxScore = tempFox;
-    //         houseCatScore = tempCat;
-    //         houseDragonScore = tempDragon;
-    //         houseFalconScore = tempOwl;
-
-    //         PlayerPrefs.Save();
-    //     }
-    // }
 
     public void ResetScores()
     {

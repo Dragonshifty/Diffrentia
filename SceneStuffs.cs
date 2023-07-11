@@ -21,7 +21,6 @@ public class SceneStuffs : MonoBehaviour
 
     public void RestartGame()
     {
-        // SceneManager.LoadScene(0);
         MainGame.Instance.NewGame();
     }
 
@@ -34,7 +33,6 @@ public class SceneStuffs : MonoBehaviour
     {
         SoundHandler.Instance.PlayDragonFlight();
         StartCoroutine(FadeOut(2));
-        // SceneManager.LoadScene(0);
     }
 
     public void LoadClanSelection()
@@ -52,6 +50,11 @@ public class SceneStuffs : MonoBehaviour
         StartCoroutine(FadeOut(5));
     }
 
+    public void LoadTutorial()
+    {
+        StartCoroutine(FadeOut(6));
+    }
+
     public void LoadWinConditions()
     {
         ScoreDataTransfer.Instance.PlayerScore = ScoreMaster.Instance.PlayerScore;
@@ -61,12 +64,10 @@ public class SceneStuffs : MonoBehaviour
         ScoreDataTransfer.Instance.DragonScore = ScoreMaster.Instance.HouseDragonScore;
         ScoreDataTransfer.Instance.FalconScore = ScoreMaster.Instance.HouseFalconScore;
         ScoreDataTransfer.Instance.UpdatePlayerPrefs();
-        // SceneManager.LoadScene(1);
     }
 
     IEnumerator FadeOut(int sceneIndex)
     {
-        // isFading = true;
         blackScreen.gameObject.SetActive(true);
 
         Color colorRef = blackScreen.color;
@@ -81,7 +82,6 @@ public class SceneStuffs : MonoBehaviour
             yield return null;
         }
 
-        // isFading = false;
         switch (sceneIndex)
         {
             case 0:
@@ -103,12 +103,14 @@ public class SceneStuffs : MonoBehaviour
             case 5:
                 SceneManager.LoadScene(5);
                 break;
+            case 6:
+                SceneManager.LoadScene(6);
+                break;
         }
     }
 
     private IEnumerator FadeIn()
     {
-        // isFading = true;
         blackScreen.gameObject.SetActive(true);
 
         Color currentColor = blackScreen.color;
@@ -122,7 +124,6 @@ public class SceneStuffs : MonoBehaviour
             yield return null;
         }
 
-        // isFading = false;
         blackScreen.gameObject.SetActive(false);
     }
 

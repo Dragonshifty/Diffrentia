@@ -7,7 +7,6 @@ using System;
 
 public class Timer : MonoBehaviour
 {
-    // public TextMeshProUGUI timer;
     public TextMeshProUGUI daysNum;
     public TextMeshProUGUI daysText;
     public TextMeshProUGUI hoursNum;

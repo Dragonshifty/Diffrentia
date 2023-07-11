@@ -244,7 +244,6 @@ public class ScoreDataTransfer : MonoBehaviour
 
     public void GetWeeksWinner()
     {
-        // string winner = "";
         string place = "";
 
         Dictionary<string, int> clanPoints = new Dictionary<string, int>

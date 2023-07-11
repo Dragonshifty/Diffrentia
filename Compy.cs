@@ -23,7 +23,6 @@ public class Compy : MonoBehaviour
                         break;
                     case 1:
                         difference = cardValue - cardInPlayValue;
-                        // difference *= 2;
                         scoreTemp[i] = isAMatch ? difference * 2 : difference;
                         break;
                     case -1:
@@ -33,34 +32,7 @@ public class Compy : MonoBehaviour
                 }
         }
 
-        // int max = scoreTemp[0];
-        // int secondHighest = int.MinValue;
-        // int returnIndex = 0;
-        // int returnIndex2 = -1;
-        //     for (int i = 0; i < scoreTemp.Length; i++)
-        //     {
-        //         if (max < scoreTemp[i])
-        //         {
-        //             secondHighest = max;
-        //             returnIndex2 = returnIndex;
-        //             max = scoreTemp[i];
-        //             returnIndex = i;
-        //         } else if (scoreTemp[i] < max && scoreTemp[i] > secondHighest)
-        //         {
-        //             secondHighest = scoreTemp[i];
-        //             returnIndex2 = i;
-        //         }
-        //     }
-
-        // if (deckCount > 20 && max <= 10 && secondHighest >= 2)
-        // {
-        //     int rand = UnityEngine.Random.Range(0, 2);
-        //     if (rand == 0) returnIndex = returnIndex2;
-        // }
-
         int returnIndex = RunPossibleChoice(scoreTemp, deckCount);
-
-        Debug.Log($"Played: {scoreTemp[returnIndex].ToString()} : {scoreTemp[0].ToString()} : {scoreTemp[1].ToString()} : {scoreTemp[2].ToString()} : {scoreTemp[3].ToString()} : {scoreTemp[4].ToString()}");
 
         return compyHand[returnIndex];
     }
