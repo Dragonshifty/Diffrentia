@@ -8,6 +8,12 @@ public class SceneStuffs : MonoBehaviour
 {
     [SerializeField] RawImage blackScreen;
     public float fadeSpeed = 1f;
+    InterstitialAd interstitialAd;
+
+    private void Awake() 
+    {
+        interstitialAd = FindObjectOfType<InterstitialAd>();    
+    }
 
     private void Start() 
     {
@@ -53,6 +59,28 @@ public class SceneStuffs : MonoBehaviour
     public void LoadTutorial()
     {
         StartCoroutine(FadeOut(6));
+    }
+
+    public void LoadNewGameFromWin()
+    {
+        if (ScoreDataTransfer.Instance.ShowAdsOrNot())
+        {
+            StartCoroutine(WaitForAdToFinish(true));
+        } else
+        {
+        LoadMainGame();
+        }
+    }
+
+    public void LoadMenuFromWin()
+    {
+        if (ScoreDataTransfer.Instance.ShowAdsOrNot())
+        {
+            StartCoroutine(WaitForAdToFinish(false));
+        } else
+        {
+        LoadMenu();
+        }
     }
 
     public void LoadWinConditions()
@@ -130,5 +158,23 @@ public class SceneStuffs : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    IEnumerator WaitForAdToFinish(bool newGameOrNot)
+    {
+        interstitialAd.ShowAd();
+
+        while (interstitialAd.IsAdPlaying())
+        {
+            yield return null;
+        }
+
+        if (newGameOrNot)
+        {
+            LoadMainGame();
+        } else
+        {
+            LoadMenu();
+        }
     }
 }

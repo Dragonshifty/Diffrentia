@@ -36,58 +36,62 @@ public class WinLoseConditions : MonoBehaviour
     [SerializeField] Sprite dragonSprite;
     [SerializeField] Sprite falconSprite;
 
-    public enum WinLossType
-    {
-        VeryCloseWin,
-        CloseWin,
-        GeneralWin,
-        BigWin,
-        VeryCloseLoss,
-        CloseLoss,
-        GeneralLoss,
-        BigLoss,
-        Draw
-    } 
+    [SerializeField] Button newGame;
+    [SerializeField] Button menu;
 
+    private void Awake() 
+    {
+        newGame.interactable = false;
+        menu.interactable = false;    
+    }
     private void Start() 
     {
-        drawMessages.Add("Alright, let's call it a draw");
+        StartCoroutine(EnableButtons());
+        drawMessages.Add("Alright, let's call it a draw.");
         drawMessages.Add("A draw! Yay. Well done, you.");
 
-        veryCloseWin.Add("Really down to the wire, there");
+        veryCloseWin.Add("Really down to the wire there.");
         veryCloseWin.Add("Just clinched it.");
         veryCloseWin.Add("A win! Only just, but still, a win!");
         veryCloseWin.Add("I probably shouldn't have bet against you there.");
+        veryCloseWin.Add("I really shouldn't cheer and drink at the same time.\nGreat win but so much tea on my screen.");
+        veryCloseWin.Add("Awesome win but not so good for my blood pressure!\nAnd relax, deep breaths...");
 
         closeWin.Add("Nicely done.");
         closeWin.Add("Edge of your seat type stuff there.");
         closeWin.Add("I was rooting for you the whole time. Honest.");
         closeWin.Add("This is promising.");
+        closeWin.Add("Do you know I'm actually dancing.\nWould be embarrasing if the webcam was on.");
 
         generalWin.Add("Very convincing win.");
         generalWin.Add("That'll do it.");
         generalWin.Add("Things are looking up.");
         generalWin.Add("Like a leaf on the wind.");
+        generalWin.Add("I would break into victory song if it weren't for the complaints.");
 
         bigWin.Add("Outstanding!");
         bigWin.Add("Go, you!");
         bigWin.Add("Now do it again!");
         bigWin.Add("And there was much whooping.");
+        bigWin.Add("Cool and breezy wins the race. Wait, that's not right?!");
 
         veryCloseLoss.Add("That's a bad miss.");
         veryCloseLoss.Add("So, so close!");
         veryCloseLoss.Add("Noooo!");
         veryCloseLoss.Add("Harsh.");
+        veryCloseLoss.Add("I'm making a low whining noise and now\nit's attracting the local wildlife.");
 
         closeLoss.Add("That was almost close.");
         closeLoss.Add("Could have gone either way.");
+        closeLoss.Add("That was outrageous. I'd file a complaint if I were you.");
+        closeLoss.Add("This reminds me of a funny story\nbut you wouldn't want to hear it right now.");
 
         bigLoss.Add("That could have gone better.");
         bigLoss.Add("I suspect foul play.");
         bigLoss.Add("Moving on...");
         bigLoss.Add("Ouch.");
 
-        generalLoss.Add("At least you tried (did you?).");
+        generalLoss.Add("Sorry, I missed that. What happened?");
         generalLoss.Add("Participation trophy on the way to you.");
         generalLoss.Add("You showed up. That's good, isn't it?");
         generalLoss.Add("Minor blip.");
@@ -327,5 +331,12 @@ public class WinLoseConditions : MonoBehaviour
     {
         int choice = rand.Next(0, bigLoss.Count);
         return bigLoss[choice];
+    }
+
+    IEnumerator EnableButtons()
+    {
+        yield return new WaitForSeconds(2);
+        newGame.interactable = true;
+        menu.interactable = true;
     }
 }

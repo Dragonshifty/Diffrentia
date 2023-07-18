@@ -28,7 +28,8 @@ public class WinnersHandler : MonoBehaviour
 
     void Start()
     {
-        winningScoreText.text = $"{winningScore} Points";
+        string winningScoreFormated = NumberFormat(winningScore);
+        winningScoreText.text = $"{winningScoreFormated} Points";
         if (winner != null)
         {
             switch (winner)
@@ -55,5 +56,27 @@ public class WinnersHandler : MonoBehaviour
         ScoreDataTransfer.Instance.ClearWeek();
     }
     
-
+    string NumberFormat(int number)
+    {
+        string suffix = "";
+        float div = 1f;
+        
+        if (number >= 1000000)
+        {
+            suffix = "M";
+            div = 1000000f;
+        } else if (number >= 1000)
+        {
+            suffix = "K";
+            div = 1000f;
+        }
+        if (number <= 1000)
+        {
+            return number.ToString();
+        } else 
+        {
+            float smaller = number / div;
+            return $"{smaller:F2}{suffix}";
+        }
+    }
 }

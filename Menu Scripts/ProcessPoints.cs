@@ -324,7 +324,7 @@ public class ProcessPoints
                 case 1:
                     return "Can anyone catch them as ";
                 case 2:
-                    return "Off in the dinstance as ";
+                    return "Off in the distance as ";
                 case 3:
                     return "Sit back and relax as ";
             }
