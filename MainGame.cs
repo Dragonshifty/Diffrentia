@@ -79,6 +79,7 @@ public class MainGame : MonoBehaviour
         // EnablePlayerHand(false);
         SetCompyHand();
         moveCards.DistributeCards(compyHand, false);
+        InterstitialAd.Instance.LoadAdOrNot();
     }
 
     public IEnumerator CoinToss()

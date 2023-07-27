@@ -18,7 +18,6 @@ public class ScoreDataTransfer : MonoBehaviour
     private List<KeyValuePair<string, int>> winList;
     private int winAmount = 10;
     public string clan = "";
-    private int adsCounter = 1;
 
     private void Awake() 
     {
@@ -321,10 +320,6 @@ public class ScoreDataTransfer : MonoBehaviour
         }
     }
 
-    public bool ShowAdsOrNot()
-    {
-        adsCounter++;
-        return adsCounter % 2 == 0 ? true : false;
-    }
+    
 
 }

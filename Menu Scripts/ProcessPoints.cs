@@ -200,7 +200,7 @@ public class ProcessPoints
             case 8:
                 if (place.Equals("First"))
                 {
-                    messageStream += $"{GetLeadComments()} your own Clan {clan} leads by {leaderDifference} and with {pointsValues[0]} points. {clanNames[1]} is second ({pointsValues[1]}), {clanNames[2]} third ({pointsValues[2]}), and {clanNames[3]} coming in last ({pointsValues[3]}).";
+                    messageStream += $"{GetLeadComments()} your own Clan {clan} leads by {leaderDifference} and with a total of {pointsValues[0]} points. {clanNames[1]} is second ({pointsValues[1]}), {clanNames[2]} third ({pointsValues[2]}), with {clanNames[3]} coming in last ({pointsValues[3]}).";
                 }
                 if (place.Equals("Second"))
                 {
@@ -260,13 +260,13 @@ public class ProcessPoints
             switch (choice)
             {
                 case 0:
-                    return "By a whisker ";
+                    return "By a whisker,";
                 case 1:
-                    return "By the narrowest of margains ";
+                    return "By the narrowest of margains,";
                 case 2:
-                    return "Don't blink but ";
+                    return "Don't blink but";
                 case 3:
-                    return "I mean, only just, but ";
+                    return "I mean, only just, but";
             }
         }
 
@@ -275,13 +275,13 @@ public class ProcessPoints
             switch (choice)
             {
                 case 0:
-                    return "Edging into the lead, ";
+                    return "Edging into the lead,";
                 case 1:
-                    return "Starting to get comfortable, ";
+                    return "Starting to get comfortable,";
                 case 2:
-                    return "Not to get complacent but ";
+                    return "Not to get complacent but";
                 case 3:
-                    return "Looking hopeful as ";
+                    return "Looking hopeful,";
             }
         }
 
@@ -290,13 +290,13 @@ public class ProcessPoints
             switch (choice)
             {
                 case 0:
-                    return "Starting to get into their stride, ";
+                    return "Starting to get into their stride,";
                 case 1:
-                    return "A slightly more convinving lead as ";
+                    return "A slightly more convinving lead,";
                 case 2:
-                    return "No resting on laurels but ";
+                    return "No resting on your laurels but,";
                 case 3:
-                    return "A confident lead as ";
+                    return "A confident lead,";
             }
         }
 
@@ -305,28 +305,42 @@ public class ProcessPoints
             switch (choice)
             {
                 case 0:
-                    return "A commanding lead as ";
+                    return "A commanding lead,";
                 case 1:
-                    return "Is there time to relax as ";
+                    return "Is there time to relax as";
                 case 2:
-                    return "Pulling away from the pack as ";
+                    return "Pulling away from the pack as";
                 case 3:
-                    return "Leaping ahead as ";
+                    return "Leaping ahead,";
             }
         }
 
-        if (leaderDifference > 79)
+        if (leaderDifference > 79 && leaderDifference < 120)
         {
             switch (choice)
             {
                 case 0:
-                    return "Way, way out in the lead as ";
+                    return "Way out in the lead,";
                 case 1:
-                    return "Can anyone catch them as ";
+                    return "Can anyone catch them as";
                 case 2:
-                    return "Off in the distance as ";
+                    return "Off in the distance,";
                 case 3:
-                    return "Sit back and relax as ";
+                    return "Sit back and relax as";
+            }
+        }
+        if (leaderDifference > 119)
+        {
+            switch (choice)
+            {
+                case 0:
+                    return "Way, way out in the lead,";
+                case 1:
+                    return "Is this on easy mode, they ask, as";
+                case 2:
+                    return "Hoarding all the points,";
+                case 3:
+                    return "With a huge lead,";
             }
         }
         return "";

@@ -36,17 +36,8 @@ public class WinLoseConditions : MonoBehaviour
     [SerializeField] Sprite dragonSprite;
     [SerializeField] Sprite falconSprite;
 
-    [SerializeField] Button newGame;
-    [SerializeField] Button menu;
-
-    private void Awake() 
-    {
-        newGame.interactable = false;
-        menu.interactable = false;    
-    }
     private void Start() 
     {
-        StartCoroutine(EnableButtons());
         drawMessages.Add("Alright, let's call it a draw.");
         drawMessages.Add("A draw! Yay. Well done, you.");
 
@@ -72,14 +63,14 @@ public class WinLoseConditions : MonoBehaviour
         bigWin.Add("Outstanding!");
         bigWin.Add("Go, you!");
         bigWin.Add("Now do it again!");
-        bigWin.Add("And there was much whooping.");
-        bigWin.Add("Cool and breezy wins the race. Wait, that's not right?!");
+        bigWin.Add("And there was much rejoicing.");
+        bigWin.Add("Cool and breezy.");
 
         veryCloseLoss.Add("That's a bad miss.");
         veryCloseLoss.Add("So, so close!");
         veryCloseLoss.Add("Noooo!");
         veryCloseLoss.Add("Harsh.");
-        veryCloseLoss.Add("I'm making a low whining noise and now\nit's attracting the local wildlife.");
+        veryCloseLoss.Add("I was just making a low whining noise but\nit started attracting the local wildlife.");
 
         closeLoss.Add("That was almost close.");
         closeLoss.Add("Could have gone either way.");
@@ -331,12 +322,5 @@ public class WinLoseConditions : MonoBehaviour
     {
         int choice = rand.Next(0, bigLoss.Count);
         return bigLoss[choice];
-    }
-
-    IEnumerator EnableButtons()
-    {
-        yield return new WaitForSeconds(2);
-        newGame.interactable = true;
-        menu.interactable = true;
     }
 }

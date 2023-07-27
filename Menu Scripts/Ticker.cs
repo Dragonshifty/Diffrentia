@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using System;
+using Unity.VisualScripting;
 
 public class Ticker : MonoBehaviour
 {
@@ -10,21 +12,15 @@ public class Ticker : MonoBehaviour
     private RectTransform textScroll;
     private bool canScroll;
     private TextMeshProUGUI tickerScroll;
-
-    // float delay = 0.04f;
-
-    // private string originalMessage;
-    // private string currentText;
-    // private float timer;
+    private DateTime startTime;
+    private Vector3 startPosition;
 
     void Awake()
     {
         textScroll = GetComponent<RectTransform>();
         tickerScroll = GetComponent<TextMeshProUGUI>();
-
-        
-        // currentText = "";
-        // timer = 0f;
+        startTime = DateTime.Now;
+        startPosition = textScroll.position;
     }
 
     
@@ -34,22 +30,16 @@ public class Ticker : MonoBehaviour
         {
             textScroll.anchoredPosition += Vector2.left * scrollSpeed * Time.deltaTime;
 
-            if (textScroll.anchoredPosition.x < -textScroll.rect.width)
+            DateTime elapsedTime = DateTime.Now;
+            TimeSpan gap = elapsedTime - startTime;
+            if (gap.Seconds % 30 == 0)
             {
-                // textScroll.anchoredPosition = new Vector2(Screen.width, textScroll.anchoredPosition.y);
-                Destroy(gameObject);
-            } 
-
-        //     if (currentText.Length < originalMessage.Length)
-        // {
-        //     timer += Time.deltaTime;
-        //     if (timer >= delay)
-        //     {
-        //         timer = 0f;
-        //         currentText = originalMessage.Substring(0, currentText.Length + 1);
-        //         tickerScroll.text = currentText;
-        //     }
-        // } 
+                textScroll.position = startPosition;
+            }             
+            // if (textScroll.anchoredPosition.x < -textScroll.rect.width)
+            // {
+            //     Destroy(gameObject);
+            // } 
         }
         
     }
@@ -66,7 +56,6 @@ public class Ticker : MonoBehaviour
         if (messageText != null)
         {
             tickerScroll.text = messageText;
-            // originalMessage = tickerScroll.text;
         }
         canScroll = true;
         processPoints = null;

@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+// using UnityEditor.VersionControl;
 
 public class SceneStuffs : MonoBehaviour
 {
     [SerializeField] RawImage blackScreen;
     public float fadeSpeed = 1f;
-    InterstitialAd interstitialAd;
+    // InterstitialAd interstitialAd;
 
-    private void Awake() 
-    {
-        interstitialAd = FindObjectOfType<InterstitialAd>();    
-    }
+    // private void Awake() 
+    // {
+    //     interstitialAd = FindObjectOfType<InterstitialAd>();    
+    // }
 
     private void Start() 
     {
@@ -61,27 +62,72 @@ public class SceneStuffs : MonoBehaviour
         StartCoroutine(FadeOut(6));
     }
 
-    public void LoadNewGameFromWin()
-    {
-        if (ScoreDataTransfer.Instance.ShowAdsOrNot())
-        {
-            StartCoroutine(WaitForAdToFinish(true));
-        } else
-        {
-        LoadMainGame();
-        }
-    }
+    // public void LoadNewGameFromWin()
+    // {
+    //     if (ScoreDataTransfer.Instance.ShowAdsOrNot())
+    //     {
+    //         StartCoroutine(WaitForAdToFinish(true));
+    //     } else
+    //     {
+    //         try 
+    //         {
+    //             PlayerPrefs.SetInt("AdsOnStart", 1);
+    //             PlayerPrefs.Save();
+    //         }
+    //         catch (PlayerPrefsException ex)
+    //         {
+    //             Debug.LogError("Failed to save to playerprefs" + ex.Message);
+    //         }
+    //         LoadMainGame();
+    //     }
+    // }
 
-    public void LoadMenuFromWin()
-    {
-        if (ScoreDataTransfer.Instance.ShowAdsOrNot())
-        {
-            StartCoroutine(WaitForAdToFinish(false));
-        } else
-        {
-        LoadMenu();
-        }
-    }
+    // public void LoadMenuFromWin()
+    // {
+    //     if (ScoreDataTransfer.Instance.ShowAdsOrNot())
+    //     {
+    //         StartCoroutine(WaitForAdToFinish(false));
+    //     } else
+    //     {
+    //         try 
+    //         {
+    //             PlayerPrefs.SetInt("AdsOnStart", 1);
+    //             PlayerPrefs.Save();
+    //         }
+    //         catch (PlayerPrefsException ex)
+    //         {
+    //             Debug.LogError("Failed to save to playerprefs" + ex.Message);
+    //         }
+    //         LoadMenu();
+    //     }
+    // }
+
+    // public void LoadMainGameFromMenu()
+    // {
+    //     bool playAds = false;
+    //     try 
+    //     {
+    //         if (PlayerPrefs.HasKey("AdsOnStart"))
+    //         {
+    //             playAds = PlayerPrefs.GetInt("AdsOnStart") == 1 ? true : false;
+    //         } else
+    //         {
+    //             PlayerPrefs.SetInt("AdsOnStart", 0);
+    //         }
+            
+    //     }
+    //     catch (PlayerPrefsException ex)
+    //     {
+    //         Debug.LogError("Failed to load from playerprefs" + ex.Message);
+    //     }
+    //     if (playAds)
+    //     {
+    //         StartCoroutine(WaitForAdToFinish(true));
+    //     } else
+    //     {
+    //         LoadMainGame();
+    //     }
+    // }
 
     public void LoadWinConditions()
     {
@@ -160,21 +206,49 @@ public class SceneStuffs : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator WaitForAdToFinish(bool newGameOrNot)
-    {
-        interstitialAd.ShowAd();
+    // public void QuitFromWin()
+    // {
+    //     bool showAds = ScoreDataTransfer.Instance.ShowAdsOrNot();
+    //     if (ScoreDataTransfer.Instance.adsCounter == 1 || showAds)
+    //     {
+    //         try 
+    //         {
+    //             PlayerPrefs.SetInt("AdsOnStart", 1);
+    //             PlayerPrefs.Save();
+    //         }
+    //         catch (PlayerPrefsException ex)
+    //         {
+    //             Debug.LogError("Failed to save to playerprefs" + ex.Message);
+    //         }
+    //     }
+    //     Application.Quit();
+    // }
 
-        while (interstitialAd.IsAdPlaying())
-        {
-            yield return null;
-        }
+    // IEnumerator WaitForAdToFinish(bool newGameOrNot)
+    // {
+    //     InterstitialAd.Instance.ShowAd();
 
-        if (newGameOrNot)
-        {
-            LoadMainGame();
-        } else
-        {
-            LoadMenu();
-        }
-    }
+    //     while (InterstitialAd.Instance.IsAdPlaying())
+    //     {
+    //         yield return null;
+    //     }
+
+    //     try 
+    //     {
+    //         PlayerPrefs.SetInt("AdsOnStart", 0);
+    //         PlayerPrefs.Save();
+    //     }
+    //     catch (PlayerPrefsException ex)
+    //     {
+    //         Debug.LogError("Failed to save to playerprefs" + ex.Message);
+    //     }
+
+    //     if (newGameOrNot)
+    //     {
+    //         LoadMainGame();
+    //     } else
+    //     {
+    //         LoadMenu();
+    //     }
+    // }
 }

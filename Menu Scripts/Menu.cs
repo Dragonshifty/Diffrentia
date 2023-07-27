@@ -22,17 +22,18 @@ public class Menu : MonoBehaviour
     BattleInfo battleInfo;
     SceneStuffs sceneStuffs;
     ConfirmCancel confirmCancel;
+    InterstitialAd interstitialAd;
     
 
     private void Awake() 
     {
         sceneStuffs = FindObjectOfType<SceneStuffs>();
         ticker = FindObjectOfType<Ticker>();
+        interstitialAd = InterstitialAd.Instance;
         CheckForClan();
     }
     void Start()
     {
-        // ticker = FindObjectOfType<Ticker>();
         RunTicker();
     }
 
@@ -45,7 +46,13 @@ public class Menu : MonoBehaviour
         {
             exists = PlayerPrefs.HasKey("ClanChosen");
             if (exists) checkClan = PlayerPrefs.GetInt("ClanChosen");
-
+            bool oneTimeAdSkip = PlayerPrefs.HasKey("OneTimeAdSkip");
+            if (!oneTimeAdSkip)
+            {
+                interstitialAd.oneTimeAdSkip = true;
+                PlayerPrefs.SetInt("OneTimeAdSkip", 1);
+                PlayerPrefs.Save();
+            }
         } catch (PlayerPrefsException ex)
         {
             Debug.Log("Player Prefs load error: " + ex.Message);
@@ -109,7 +116,6 @@ public class Menu : MonoBehaviour
         {
             var highestScore = clanPoints.Aggregate((x, y) => x.Value > y.Value ? x : y);
             currentLeader = highestScore.Key;
-            // currentLeadersScore = highestScore.Value;
         }
         return currentLeader;
     }
