@@ -14,6 +14,7 @@ public class Ticker : MonoBehaviour
     private TextMeshProUGUI tickerScroll;
     private DateTime startTime;
     private Vector3 startPosition;
+    private Vector3 startPosition2;
 
     void Awake()
     {
@@ -21,6 +22,8 @@ public class Ticker : MonoBehaviour
         tickerScroll = GetComponent<TextMeshProUGUI>();
         startTime = DateTime.Now;
         startPosition = textScroll.position;
+        float partial = textScroll.rect.width / 16;
+        startPosition2 = new Vector3(startPosition.x + partial, textScroll.position.y, textScroll.position.z);
     }
 
     
@@ -32,7 +35,7 @@ public class Ticker : MonoBehaviour
 
             DateTime elapsedTime = DateTime.Now;
             TimeSpan gap = elapsedTime - startTime;
-            if (gap.Seconds % 30 == 0)
+            if (gap.Seconds % 30 == 0 && gap.Seconds > 0)
             {
                 textScroll.position = startPosition;
             }             

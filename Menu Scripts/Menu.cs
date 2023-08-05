@@ -13,9 +13,7 @@ public class Menu : MonoBehaviour
     private int catPoints;
     private int dragonPoints;
     private int falconPoints;
-    // private string currentLeaders;
-    // private int currentLeadersScore;
-    // public TextMeshProUGUI tick;
+
     private Dictionary<string, int> clanPoints;
 
     Ticker ticker;

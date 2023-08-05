@@ -163,7 +163,7 @@ public class ProcessPoints
                     messageStream += $"Three clans share the lead with {pointsValues[0]}. Your clan, {clan}, are trailing a little bit with {pointsValues[3]} points.";
                 } else
                 {
-                    messageStream += $"Three clamber for the lead and all share {pointsValues[0]} points! You're amongst them - {clan} - so elbows out! Only {clanNames[3]} is on their own in last.";
+                    messageStream += $"Three clamber for the lead and all share {pointsValues[0]} points! You're amongst them - {clan} - so elbows out. Only {clanNames[3]} is on their own in last.";
                 }
                 break;
             case 3:
@@ -179,10 +179,10 @@ public class ProcessPoints
             case 4:
                 if (place.Equals("First"))
                 { 
-                    messageStream += $"You're in the lead with {pointsValues[0]} points! Am I supposed to be unbiased? Oh well, go, Clan {clan}!";
+                    messageStream += $"You're in the lead with {pointsValues[0]} points! Am I supposed to be unbiased? Go, Clan {clan}!";
                 } else if (place.Equals("Second"))
                 {
-                    messageStream += $"Your clan, {clan}, are currently runners-up and trailing {clanNames[0]} by {leaderDifference} points. Let's push.";
+                    messageStream += $"Your clan, {clan}, are currently runners-up and trailing {clanNames[0]} by {leaderDifference} points.";
                 } else if (place.Equals("Third"))
                 {
                     messageStream += $"Your clan, {clan}, are in third with {pointsValues[2]} points - {secondToThird} points behind clan {clanNames[1]}, who are behind {clanNames[0]}.";
@@ -211,7 +211,7 @@ public class ProcessPoints
                     messageStream += $"We have {clanNames[0]} in first with {pointsValues[0]} points and {clanNames[1]} with {pointsValues[1]}. You're representing Clan {clan} in third with {pointsValues[2]} points, and leading {clanNames[3]} by {loserDifference}.";
                 }
 
-                string losing = pointsValues[3] == 0 ? $" Unfortunately you're yet to score with Clan {clan}. Early days!" : $" Your clan, {clan} is trailing by {loserDifference} points. Let's push.";
+                string losing = pointsValues[3] == 0 ? $"Unfortunately you're yet to score with Clan {clan}. Early days!" : $" Your clan, {clan} is trailing by {loserDifference} points. Let's push.";
 
                 if (place.Equals("Fourth"))
                 {
@@ -322,7 +322,7 @@ public class ProcessPoints
                 case 0:
                     return "Way out in the lead,";
                 case 1:
-                    return "Can anyone catch them as";
+                    return "Can anyone catch them,";
                 case 2:
                     return "Off in the distance,";
                 case 3:
@@ -336,7 +336,7 @@ public class ProcessPoints
                 case 0:
                     return "Way, way out in the lead,";
                 case 1:
-                    return "Is this on easy mode, they ask, as";
+                    return "Is this on easy mode? As";
                 case 2:
                     return "Hoarding all the points,";
                 case 3:

@@ -62,12 +62,7 @@ public class MainGame : MonoBehaviour
     void Start()
     {
         NewGame();
-        // SoundHandler.Instance.PlayMusic();
     }
-
-    // private void Update() {
-    //     if (gameOver) EndGame();
-    // }
 
     public void NewGame()
     {
@@ -185,10 +180,6 @@ public class MainGame : MonoBehaviour
             sortOrderInt++;
             deck[lastCard].GetComponent<ObjectDetails>().RaiseSortingOrder(sortOrderInt);
         } 
-        // else
-        // {
-        //     gameOver = true;
-        // }
     }
 
     public void GetCardToPlay(GameObject cardPick)

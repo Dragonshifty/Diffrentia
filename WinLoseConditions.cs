@@ -46,15 +46,16 @@ public class WinLoseConditions : MonoBehaviour
         veryCloseWin.Add("A win! Only just, but still, a win!");
         veryCloseWin.Add("I probably shouldn't have bet against you there.");
         veryCloseWin.Add("I really shouldn't cheer and drink at the same time.\nGreat win but so much tea on my screen.");
-        veryCloseWin.Add("Awesome win but not so good for my blood pressure!\nAnd relax, deep breaths...");
+        veryCloseWin.Add("Awesome win but not so good for my blood pressure.\nAnd relax... deep breaths...");
 
         closeWin.Add("Nicely done.");
         closeWin.Add("Edge of your seat type stuff there.");
         closeWin.Add("I was rooting for you the whole time. Honest.");
         closeWin.Add("This is promising.");
+        closeWin.Add("Unexpected win in the scoring area.");
         closeWin.Add("Do you know I'm actually dancing.\nWould be embarrasing if the webcam was on.");
 
-        generalWin.Add("Very convincing win.");
+        generalWin.Add("Looked like you knew what you were doing there (mostly).");
         generalWin.Add("That'll do it.");
         generalWin.Add("Things are looking up.");
         generalWin.Add("Like a leaf on the wind.");
@@ -65,14 +66,17 @@ public class WinLoseConditions : MonoBehaviour
         bigWin.Add("Now do it again!");
         bigWin.Add("And there was much rejoicing.");
         bigWin.Add("Cool and breezy.");
+        bigWin.Add("Epic.");
+        bigWin.Add("Smooth.");
 
         veryCloseLoss.Add("That's a bad miss.");
         veryCloseLoss.Add("So, so close!");
         veryCloseLoss.Add("Noooo!");
         veryCloseLoss.Add("Harsh.");
-        veryCloseLoss.Add("I was just making a low whining noise but\nit started attracting the local wildlife.");
+        veryCloseLoss.Add("I'm currently emitting an annoying whining noise out of solidarity.");
 
         closeLoss.Add("That was almost close.");
+        closeLoss.Add("Robbed.");
         closeLoss.Add("Could have gone either way.");
         closeLoss.Add("That was outrageous. I'd file a complaint if I were you.");
         closeLoss.Add("This reminds me of a funny story\nbut you wouldn't want to hear it right now.");
