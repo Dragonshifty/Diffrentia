@@ -179,7 +179,7 @@ public class ProcessPoints
             case 4:
                 if (place.Equals("First"))
                 { 
-                    messageStream += $"You're in the lead with {pointsValues[0]} points! Am I supposed to be unbiased? Go, Clan {clan}!";
+                    messageStream += $"You're in the lead with {pointsValues[0]} points for Clan {clan}!";
                 } else if (place.Equals("Second"))
                 {
                     messageStream += $"Your clan, {clan}, are currently runners-up and trailing {clanNames[0]} by {leaderDifference} points.";

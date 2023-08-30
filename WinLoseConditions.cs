@@ -38,8 +38,9 @@ public class WinLoseConditions : MonoBehaviour
 
     private void Start() 
     {
-        drawMessages.Add("Alright, let's call it a draw.");
-        drawMessages.Add("A draw! Yay. Well done, you.");
+        drawMessages.Add("Let's call it a draw.");
+        drawMessages.Add("A draw! Yay.");
+        drawMessages.Add("Someone less sensitive would say that's slightly more annoying than a loss.");
 
         veryCloseWin.Add("Really down to the wire there.");
         veryCloseWin.Add("Just clinched it.");
@@ -60,6 +61,7 @@ public class WinLoseConditions : MonoBehaviour
         generalWin.Add("Things are looking up.");
         generalWin.Add("Like a leaf on the wind.");
         generalWin.Add("I would break into victory song if it weren't for the complaints.");
+        generalWin.Add("Actually quite splendid.");
 
         bigWin.Add("Outstanding!");
         bigWin.Add("Go, you!");
@@ -68,6 +70,7 @@ public class WinLoseConditions : MonoBehaviour
         bigWin.Add("Cool and breezy.");
         bigWin.Add("Epic.");
         bigWin.Add("Smooth.");
+        bigWin.Add("The other clans are wondering if that was just a bit mean.");
 
         veryCloseLoss.Add("That's a bad miss.");
         veryCloseLoss.Add("So, so close!");
@@ -85,11 +88,13 @@ public class WinLoseConditions : MonoBehaviour
         bigLoss.Add("I suspect foul play.");
         bigLoss.Add("Moving on...");
         bigLoss.Add("Ouch.");
+        bigLoss.Add("I'm not angry or disappointed, more perplexed than anything.");
 
         generalLoss.Add("Sorry, I missed that. What happened?");
         generalLoss.Add("Participation trophy on the way to you.");
         generalLoss.Add("You showed up. That's good, isn't it?");
         generalLoss.Add("Minor blip.");
+        generalLoss.Add("Excellent data for my PHD in Questionable Player Choices.");
 
         RunEndGame();
     }
