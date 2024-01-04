@@ -1,6 +1,6 @@
 # Diffrentia
 
-Diffrentia Beta .4c Readme
+Created in Unity and is available free-with-ads on Google Play.
 
 How to play:
 
@@ -10,8 +10,14 @@ Your choice will be remembered next time you start the game.
 
 Main Game:
 
+Short Description: 
+Play a card higher than the card on the pile to gain the difference in points. Play a lower card and lose the difference. 
+Match the clan to either double the points if higher or negate the damage (0) if a lower card.
+Points go into a weekly high score against the other clans.
+
+Long Description:
 A game consists of playing through a full 52 pack of cards (where suits are now clans).
-Five cards will be dealt out between you and the computer and a virtual coin toss decides who starts (animation broken this release).
+Five cards will be dealt out between you and the computer and a virtual coin toss decides who starts.
 Both your hand and the computer's hand will always be automatically sorted in ascending numerical order from left to right.
 
 After the first card has been played, you/the computer will try to lay a higher card.
@@ -24,12 +30,12 @@ If you match the clan on a turn where you would lose points, all damage is negat
 It's recommened you play a few turns of the main game before going on the the Clan Battle section.
 
 
-On-screen numbers:
+On-screen display:
 
 On the main game screen the four red numbers represent clan points that round (shown next to corresponding clan picture).
 Big white number in upper left is you total score that round.
 The number immediately below is how much you scored last turn.
-Big number on the right is the total computer score, and underneath is their last points scored.
+The big number on the right is the total computer score, and underneath is their last points scored.
 
 The number number the middle and circular graphic shows the remaining cards count and the graphic decreases alongside this, too.
 
@@ -44,28 +50,7 @@ Likewise vice-versa - if you lose the other three clans score their accumulated 
 The goal is to score the most points before it resets at 6pm each Sunday (local time).
 
 
-Notes/Things not implemented yet/Bugs:
 
-Proper tutorial to be implemented.
-
-The animation showing the coin toss didn't work properly on Android and didn't have time to fix for this release.
-There's therefore a slightly annoying delay when it's computer turn and you don't know either way.
-
-You can reset your clan choice at the moment at any time by clicking the reset button on the clan selection screen.
-This will clear all points, too. It won't yet show you that you have done this, just to be aware that it has.
-If you click on a different clan you will start scoring for the clan (just to be aware of this).
-
-A lot of artwork and sound has yet to be completed, such as buttons, card graphics, effects etc.
-
-Clan weekly win yet to be properly implemented - just countdown so far but you can manually reset.
-
-The A.I. currently tries to play the highest score or least damage if that's not possible. 
-I'll be tweaking this a bit, but you can use this to your advantage and play tactically.
-
-You can currently restart a game mid-way through, but it won't clear the clan points for that round.
-This will be removed or tweaked to be a feature.
-
-May possibly add clan specialities, such as blocking with a chosen clan card gains points, extra points for clan bonus points etc etc. 
 
 
 
