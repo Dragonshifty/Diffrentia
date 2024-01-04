@@ -45,13 +45,19 @@ Clan Battle System:
 When you pick a clan at the start, you represent that clan and the computer represents the other three.
 Points are gained by playing a scoring move with a card that is of your clan. 
 The computer scores for the other clans.
-You only retain those clan points if you win the game - in which case only your clan gains points and the other three do not.
+You only retain those clan points if you win the game - in which case only your clan gains points and the other three do not.5
 Likewise vice-versa - if you lose the other three clans score their accumulated points.
 The goal is to score the most points before it resets at 6pm each Sunday (local time).
+5
 
 
+![splash_opt](https://github.com/Dragonshifty/Diffrentia/assets/91226933/93efd85c-c8b1-40d2-85fc-574a93e1f873)
 
+![maingame_opt](https://github.com/Dragonshifty/Diffrentia/assets/91226933/6efce931-d57c-40ea-9823-fa31f27eb776)
 
+![winscreen_opt](https://github.com/Dragonshifty/Diffrentia/assets/91226933/0452a9d1-76b7-4316-bdf8-7e8a77a82646)
+
+https://www.youtube.com/watch?v=03R1yHnLjQc
 
 
 
